@@ -6,6 +6,9 @@ const {
 const config = require('config');
 const bodyParser = require('koa-bodyparser');
 const Router = require('@koa/router');
+const {
+  initializeDatabase
+} = require('./data/index');
 
 
 //object instanties, aanroep methodes, variabelen
