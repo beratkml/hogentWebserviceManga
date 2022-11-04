@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "config": "^3.3.8",
+    "env-cmd": "^10.1.0",
     "koa": "^2.13.1",
     "winston": "^3.8.2"
   },
@@ -11,6 +13,6 @@
     "nodemon": "^2.0.12"
   },
   "scripts": {
-    "start": "nodemon ./src/index.js"
+    "start": "npx env-cmd nodemon ./src/index.js"
   }
 }
