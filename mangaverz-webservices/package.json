@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "npx env-cmd nodemon src/index.js"
+  },
+	"dependencies": {
+		"koa": "^2.13.1"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.12"
+	}
+}
