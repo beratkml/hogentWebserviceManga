@@ -3,10 +3,10 @@ module.exports = {
     level: 'silly',
     disabled: false
   },
-  database: {
-    host: localhost,
-    port: 3306,
-    database: 'mangaverz',
-    client: 'mysql2'
-  }
+  // database: {
+  //   host: localhost,
+  //   port: 3306,
+  //   database: 'mangaverz',
+  //   client: 'mysql2'
+  // }
 }
