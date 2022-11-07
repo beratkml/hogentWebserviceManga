@@ -92,7 +92,31 @@ let MANGACOLLECTION = [{
     status_reading: 'paused'
   }
 ];
+
+USER = [{
+    id: '1',
+    username: 'cosea',
+    password: '123456',
+  },
+  {
+    id: '2',
+    username: 'bob456',
+    password: 'oepdkfdsf89',
+  },
+  {
+    id: '3',
+    username: 'lol156',
+    password: 'paksodfpjz666',
+  },
+  {
+    id: '4',
+    username: 'kopkop8989',
+    password: 'lol59849',
+  },
+
+]
 module.exports = {
   MANGA,
-  MANGACOLLECTION
+  MANGACOLLECTION,
+  USER
 }

@@ -3,11 +3,11 @@ let {
   MANGACOLLECTION
 } = require('../data/testData');
 
-const getAll = () => {
-  return {
+const getAll = async () => {
+  return Promise.resolve({
     items: MANGACOLLECTION,
     count: MANGACOLLECTION.length
-  }
+  })
 }
 
 const getById = (id) => {
