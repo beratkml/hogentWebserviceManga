@@ -1,26 +1,21 @@
-//requirements en imports
-const knex = require('knex');
+const knex = require('knex')
 const config = require('config');
 const {
   getLogger
 } = require('../core/logging');
 
-//object instanties, aanroep methodes, variabelen
-const DATABASE_CLIENT = config('database.client');
-const DATABASE_HOST = config('database.host');
-const DATABASE_PORT = config('database.port');
-const DATABASE_USERNAME = config('database.username');
-const DATABASE_PASSWORD = config('database.password');
-const DATABASE_DATABASE = config('database.database');
-const NODE_ENV = config('env');
-const isDevelopment = NODE_ENV == "development";
+const DATABASE_CLIENT = config.get('database.client');
+const DATABASE_HOST = config.get('database.host');
+const DATABASE_PORT = config.get('database.port');
+const DATABASE_USERNAME = config.get('database.username');
+const DATABASE_PASSWORD = config.get('database.password');
+const DATABASE_DATABASE = config.get('database.database');
+const NODE_ENV = config.get('env');
+const isDevelopment = NODE_ENV === 'development';
 let knexInstance;
-
-//else
 const initializeDatabase = async () => {
   const knexOptions = {
     client: DATABASE_CLIENT,
-    debug: isDevelopment,
     connection: {
       host: DATABASE_HOST,
       port: DATABASE_PORT,
@@ -30,31 +25,34 @@ const initializeDatabase = async () => {
     }
   }
   knexInstance = knex(knexOptions);
-  //database check
   try {
-    await knexInstance('SELECT 1+1 AS result');
+    await knexInstance.raw('SELECT 1+1 AS result');
   } catch (error) {
-    getLogger().error('Error init database', {
+    logger.error(error.message, {
       error
     });
-    throw new Error('init database failed');
+    throw new Error('Could not initialize the data layer');
   }
+  return knexInstance;
 }
 
-const getKnex = () => {
+function getKnex() {
+  const logger = getLogger();
   if (!knexInstance) {
-    throw new Error('Connection not initialized');
-  }
-  return knexInstance
+    logger.error(knexInstance);
+    throw new Error('Please initialize the data layer before getting the Knex instance')
+  };
+  return knexInstance;
 }
 
-//Object kan niet worden aangepast
 const tables = Object.freeze({
-  //tabel binnen databank databank
-})
+  mangacollection: 'mangacollection',
+  manga: 'mangas',
+  user: 'user',
+});
 
 module.exports = {
   initializeDatabase,
+  tables,
   getKnex,
-  tables
-};
+}

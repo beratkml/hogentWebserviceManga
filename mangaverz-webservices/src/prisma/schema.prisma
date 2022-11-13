@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String            @id @default(uuid())
+  username        String            @unique
+  password        String
+  MangaCollection MangaCollection[]
+}
+
+model Manga {
+  id              String            @id @default(uuid())
+  name            String
+  chapters        Int
+  isFinished      Boolean
+  author          String
+  release_date    DateTime
+  description     String
+  MangaCollection MangaCollection[]
+  genre           Genre             @relation(fields: [genreId], references: [id])
+  genreId         String
+}
+
+model MangaCollection {
+  id              String        @id @default(uuid())
+  manga           Manga         @relation(fields: [mangaId], references: [id])
+  mangaId         String
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String
+  start_date      DateTime
+  end_date        DateTime
+  current_chapter Int
+  status_reading  StatusReading @relation(fields: [statusReadingId], references: [id])
+  statusReadingId String
+}
+
+model Genre {
+  id    String  @id @default(uuid())
+  name  String
+  Manga Manga[]
+}
+
+model StatusReading {
+  id              String            @id @default(uuid())
+  type            String
+  MangaCollection MangaCollection[]
+}

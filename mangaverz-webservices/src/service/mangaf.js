@@ -3,17 +3,18 @@ let {
   MANGACOLLECTION
 } = require('../data/testData');
 
+const mangacollectionRepository = require('../repository/mangacollection');
+
 const getAll = async () => {
-  return Promise.resolve({
-    items: MANGACOLLECTION,
-    count: MANGACOLLECTION.length
-  })
+  const mangacollection = await mangacollectionRepository.getAll();
+  return {
+    items: mangacollection,
+    count: mangacollection.length
+  }
 }
 
-const getById = (id) => {
-  return {
-    item: MANGACOLLECTION.find(e => e.id === parseInt(id))
-  }
+const getById = async (id) => {
+  return await mangacollectionRepository.getCollectionItemById(id);
 }
 
 const create = ({

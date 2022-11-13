@@ -17,7 +17,7 @@ const createMangaCollection = async (ctx) => {
 }
 
 const getMangaFromCollectionById = async (ctx) => {
-  ctx.body = mangaCollectionService.getById(ctx.params.id);
+  ctx.body = await mangaCollectionService.getById(ctx.params.id);
 }
 
 const deleteMangaFromCollectionById = async (ctx) => {
