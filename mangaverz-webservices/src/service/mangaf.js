@@ -3,46 +3,50 @@ let {
   MANGACOLLECTION
 } = require('../data/testData');
 
-const mangacollectionRepository = require('../repository/mangacollection');
 
-const getAll = async () => {
-  const mangacollection = await mangacollectionRepository.getAll();
+const prismaRepos = require('../repository/index');
+
+const getMangaByIdPrisma = async (id) => {
+  return await prismaRepos.mangaById(id);
+}
+
+const getAllMangaPrisma = async () => {
+  const mangas = await prismaRepos.getAllManga();
   return {
-    items: mangacollection,
-    count: mangacollection.length
+    items: mangas,
+    count: mangas.length
   }
 }
 
-const getById = async (id) => {
-  return await mangacollectionRepository.getCollectionItemById(id);
-}
-
-const create = ({
-  mangaid,
-  start_date,
-  end_date,
-  current_chapter,
-  status_reading
+const createMangaPrisma = async ({
+  name,
+  chapters,
+  isFinished,
+  author,
+  release_date,
+  description,
+  genreId
 }) => {
-  let bestaandeManga;
-  if (mangaid) {
-    bestaandeManga = MANGA.find(e => e.id === mangaid);
-  }
-  if (!bestaandeManga) {
-    throw new Error(`Manga: ${mangaid} does not exist`)
-  }
+  const data = await prismaRepos.addNewManga(name, chapters, isFinished, author, release_date, description, genreId);
+  return data;
+}
 
-  const newManga = {
-    id: Math.max(...MANGACOLLECTION.map(e => e.id)) + 1,
-    mangaid: bestaandeManga,
-    start_date: start_date.toISOString(),
-    end_date: end_date.toISOString(),
-    current_chapter,
-    status_reading
-  }
+const deleteMangaPrisma = async (id) => {
+  await prismaRepos.deleteMangaById(id);
+}
 
-  MANGACOLLECTION = [...MANGACOLLECTION, newManga];
-  return newManga;
+const updateMangaByIdPrisma = async (id, {
+  name,
+  chapters,
+  isFinished,
+  author,
+  release_date,
+  description,
+  genreId
+}) => {
+  const data = await prismaRepos.updateMangaById(id, name, chapters, isFinished, author, release_date, description, genreId);
+  console.log(data);
+  return data;
 }
 
 const update = (id, {
@@ -61,14 +65,12 @@ const update = (id, {
   mangaInCollectie.current_chapter = current_chapter
   return mangaInCollectie;
 }
-const deleteById = (id) => {
-  MANGACOLLECTION = MANGACOLLECTION.filter(e => e.id !== parseInt(id));
-}
 
 module.exports = {
-  getAll,
-  getById,
-  create,
   update,
-  deleteById
+  deleteMangaPrisma,
+  getMangaByIdPrisma,
+  getAllMangaPrisma,
+  createMangaPrisma,
+  updateMangaByIdPrisma
 }

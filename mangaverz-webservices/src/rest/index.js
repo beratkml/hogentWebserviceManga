@@ -1,5 +1,5 @@
 //requires
-const installMangaCollectionRouter = require('./_beheerMangaCollectie');
+const installMangaCollectionRouter = require('./_beheerManga');
 const installHealthRouter = require('./_health');
 const Router = require('@koa/router');
 

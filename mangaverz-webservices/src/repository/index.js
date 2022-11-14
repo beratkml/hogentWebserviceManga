@@ -9,22 +9,11 @@ const prisma = new PrismaClient({
   log: ["query"]
 });
 
-const main = async () => {
-  // const genre = await prisma.manga.create({
-  //   data: {
-  //     name: "Attack on Titan",
-  //     author: "Hajime Isayama",
-  //     chapters: 139,
-  //     description: "Set in a world where humanity is forced to live in cities surrounded by three enormous walls that protect them from gigantic man-eating humanoids referred to as Titans",
-  //     isFinished: true,
-  //     release_date: new Date("2013-04-13"),
-  //     genreId: "abecee8d-5498-4696-86be-41e6e4cde2d6"
-  //   }
-  // })
-
+//Manga Operations
+const mangaById = async (id) => {
   const manga = await prisma.manga.findFirst({
     where: {
-      id: "c0c13337-c76c-467c-9d58-23cb8fa49caa"
+      id: id
     },
     select: {
       name: true,
@@ -39,7 +28,77 @@ const main = async () => {
       }
     }
   })
-  console.log(manga)
+  return manga;
+}
+
+const getAllManga = async () => {
+  return await prisma.manga.findMany();
+}
+
+const updateMangaById = async (id,
+  name,
+  chapters,
+  isFinished,
+  author,
+  release_date,
+  description,
+  genreId
+) => {
+  const manga = await prisma.manga.update({
+    where: {
+      id: id
+    },
+    data: {
+      author: author,
+      chapters: chapters,
+      description: description,
+      genreId: genreId,
+      isFinished: isFinished,
+      name: name,
+      release_date: release_date
+    }
+  })
+  return manga;
+}
+
+const addNewManga = async (
+  name,
+  chapters,
+  isFinished,
+  author,
+  release_date,
+  description,
+  genreId
+) => {
+  const manga = await prisma.manga.create({
+    data: {
+      author: author,
+      chapters: chapters,
+      description: description,
+      isFinished: isFinished,
+      name: name,
+      release_date: release_date,
+      genreId: genreId
+    }
+  })
+  return manga;
+}
+
+const deleteMangaById = async (id) => {
+  await prisma.manga.delete({
+    where: {
+      id: id
+    }
+  })
+}
+
+//Collection Operations
+//User Operations
+
+
+//Testen
+const main = async () => {
+  console.log(await prisma.manga.findMany());
 }
 
 main()
@@ -51,3 +110,11 @@ main()
     await prisma.$disconnect()
     process.exit(1)
   })
+
+module.exports = {
+  mangaById,
+  getAllManga,
+  updateMangaById,
+  addNewManga,
+  deleteMangaById
+}
