@@ -1,5 +1,6 @@
 //requires
-const installMangaCollectionRouter = require('./_beheerManga');
+const installMangaRouter = require('./_beheerManga');
+const installCollectionRouter = require('./_beheerCollection');
 const installHealthRouter = require('./_health');
 const Router = require('@koa/router');
 
@@ -8,7 +9,8 @@ module.exports = (app) => {
     prefix: '/api'
   });
 
-  installMangaCollectionRouter(router);
+  installMangaRouter(router);
+  installCollectionRouter(router);
   installHealthRouter(router);
 
   app.use(router.routes()).use(router.allowedMethods());

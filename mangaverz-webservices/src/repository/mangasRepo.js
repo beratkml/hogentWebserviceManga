@@ -1,13 +1,6 @@
 const {
-  PrismaClient
-} = require('@prisma/client');
-const {
-  query
-} = require('winston');
-
-const prisma = new PrismaClient({
-  log: ["query"]
-});
+  prisma
+} = require('../prisma/prisma');
 
 //Manga Operations
 const mangaById = async (id) => {
@@ -21,18 +14,22 @@ const mangaById = async (id) => {
       author: true,
       chapters: true,
       isFinished: true,
-      genre: {
-        select: {
-          name: true
-        }
-      }
+      genre: true
     }
   })
   return manga;
 }
 
 const getAllManga = async () => {
-  return await prisma.manga.findMany();
+  return await prisma.manga.findMany({
+    select: {
+      name: true,
+      description: true,
+      author: true,
+      release_date: true,
+      genre: true
+    }
+  });
 }
 
 const updateMangaById = async (id,
@@ -91,10 +88,6 @@ const deleteMangaById = async (id) => {
     }
   })
 }
-
-//Collection Operations
-//User Operations
-
 
 //Testen
 const main = async () => {
