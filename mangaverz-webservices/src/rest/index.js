@@ -2,6 +2,7 @@
 const installMangaRouter = require('./_beheerManga');
 const installCollectionRouter = require('./_beheerCollection');
 const installHealthRouter = require('./_health');
+const installGenreRouter = require('./_beheerGenres');
 const Router = require('@koa/router');
 
 module.exports = (app) => {
@@ -10,6 +11,7 @@ module.exports = (app) => {
   });
 
   installMangaRouter(router);
+  installGenreRouter(router);
   installCollectionRouter(router);
   installHealthRouter(router);
 
