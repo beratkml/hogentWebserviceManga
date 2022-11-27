@@ -7,14 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Genre {
-  id    String  @id @default(uuid())
+model genre {
+  id    String  @id @unique @default(uuid())
   name  String
-  manga Manga[]
+  manga manga[]
 }
 
-model Manga {
-  id              String            @id @default(uuid())
+model manga {
+  id              String            @id @unique @default(uuid())
   name            String
   chapters        Int
   isFinished      Boolean
@@ -22,38 +22,38 @@ model Manga {
   release_date    DateTime
   description     String
   genreId         String
-  genre           Genre             @relation(fields: [genreId], references: [id], map: "Manga_genreId_fkey")
-  mangacollection Mangacollection[]
+  genre           genre             @relation(fields: [genreId], references: [id], map: "Manga_genreId_fkey")
+  mangacollection mangacollection[]
 
   @@index([genreId], map: "Manga_genreId_fkey")
 }
 
-model Mangacollection {
-  id              String        @id @default(uuid())
+model mangacollection {
+  id              String        @id @unique @default(uuid())
   start_date      DateTime
   end_date        DateTime
   current_chapter Int
   mangaId         String
   userId          String
   statusReadingId String
-  manga           Manga         @relation(fields: [mangaId], references: [id], map: "MangaCollection_mangaId_fkey")
-  statusreading   Statusreading @relation(fields: [statusReadingId], references: [id], map: "MangaCollection_statusReadingId_fkey")
-  user            User          @relation(fields: [userId], references: [id], map: "MangaCollection_userId_fkey")
+  manga           manga         @relation(fields: [mangaId], references: [id], map: "MangaCollection_mangaId_fkey")
+  statusreading   statusreading @relation(fields: [statusReadingId], references: [id], map: "MangaCollection_statusReadingId_fkey")
+  user            user          @relation(fields: [userId], references: [id], map: "MangaCollection_userId_fkey")
 
   @@index([mangaId], map: "MangaCollection_mangaId_fkey")
   @@index([statusReadingId], map: "MangaCollection_statusReadingId_fkey")
   @@index([userId], map: "MangaCollection_userId_fkey")
 }
 
-model Statusreading {
-  id              String            @id @default(uuid())
+model statusreading {
+  id              String            @id @unique @default(uuid())
   type            String
-  mangacollection Mangacollection[]
+  mangacollection mangacollection[]
 }
 
-model User {
-  id              String            @id @default(uuid())
+model user {
+  id              String            @id @unique @default(uuid())
   username        String            @unique(map: "User_username_key")
   password        String
-  mangacollection Mangacollection[]
+  mangacollection mangacollection[]
 }

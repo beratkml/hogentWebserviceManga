@@ -22,5 +22,8 @@
     "start": "npx env-cmd nodemon ./src/index.js",
     "postinstall": "prisma generate",
     "devStart":"nodemon ./src/repository/index.js"
+  },
+  "prisma":{
+    "seed":"node ./prisma/seed.js"
   }
 }

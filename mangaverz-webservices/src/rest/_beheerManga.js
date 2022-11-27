@@ -48,6 +48,5 @@ module.exports = (app) => {
   router.post('/', createManga);
   router.put('/:id', updateMangaById);
   router.delete('/:id', deleteMangaById);
-
   app.use(router.routes()).use(router.allowedMethods());
 }

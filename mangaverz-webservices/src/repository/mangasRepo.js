@@ -23,6 +23,7 @@ const mangaById = async (id) => {
 const getAllManga = async () => {
   return await prisma.manga.findMany({
     select: {
+      id: true,
       name: true,
       description: true,
       author: true,

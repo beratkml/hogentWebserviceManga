@@ -29,6 +29,7 @@ const deleteMangaPrisma = async (id) => {
   await prismaMangaRepo.deleteMangaById(id);
 }
 
+
 const updateMangaByIdPrisma = async ({
   id,
   startDate,
@@ -46,5 +47,5 @@ module.exports = {
   getMangaByIdPrisma,
   getAllMangaPrisma,
   createMangaPrisma,
-  updateMangaByIdPrisma
+  updateMangaByIdPrisma,
 }

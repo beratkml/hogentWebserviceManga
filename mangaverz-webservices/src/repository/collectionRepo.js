@@ -3,20 +3,20 @@ const {
 } = require('../prisma/prisma');
 
 const getCollectionById = async (id) => {
-  return await prisma.mangaCollection.findFirst({
+  return await prisma.mangacollection.findFirst({
     where: {
       id: id
     },
     select: {
       manga: true,
       user: true,
-      status_reading: true
+      statusreading: true
     }
   })
 }
 
 const getAllCollections = async () => {
-  return await prisma.mangaCollection.findMany({
+  return await prisma.mangacollection.findMany({
     select: {
       id: true,
       manga: true,
@@ -24,7 +24,7 @@ const getAllCollections = async () => {
       start_date: true,
       end_date: true,
       current_chapter: true,
-      status_reading: true
+      statusreading: true
     }
   });
 }
@@ -33,7 +33,7 @@ const updateCollectionById = async (id, start_date,
   end_date,
   current_chapter,
   status_reading) => {
-  const data = await prisma.mangaCollection.update({
+  const data = await prisma.mangacollection.update({
     where: {
       id: id
     },
@@ -49,7 +49,7 @@ const updateCollectionById = async (id, start_date,
         }
       },
       user: true,
-      status_reading: true
+      statusreading:true
     },
     data: {
       start_date: start_date,
@@ -62,7 +62,7 @@ const updateCollectionById = async (id, start_date,
 }
 
 const deleteColletionById = async (id) => {
-  return await prisma.mangaCollection.delete();
+  return await prisma.mangacollection.delete();
 }
 
 const addMangaToCollection = async ({
@@ -73,7 +73,7 @@ const addMangaToCollection = async ({
   current_chapter,
   status_reading
 }) => {
-  return await prisma.mangaCollection.create({
+  return await prisma.mangacollection.create({
     data: {
       current_chapter: current_chapter,
       end_date: end_date,
