@@ -7,10 +7,13 @@ const {
 } = require('./core/logging.js');
 const config = require('config');
 const bodyParser = require('koa-bodyparser');
-const {
-  initializeDatabase
-} = require('./data/index');
 const installREST = require('./rest/index');
+const {
+  initDatabase
+} = require('./repository/index');
+const {
+  execSync
+} = require('node:child_process');
 
 const NODE_ENV = config.get('env')
 const LOG_LEVEL = config.get('log.level');
@@ -25,7 +28,6 @@ initializeLogger({
 const main = async () => {
   //object instanties, aanroep methodes, variabelen
   const logger = getLogger();
-  await initializeDatabase();
   const app = new Koa();
   //CORS gaat de URL controleren
   const CORS_ORIGINS = config.get('cors.origins');
@@ -43,8 +45,7 @@ const main = async () => {
       maxAge: CORS_MAX_AGE,
     })
   );
-
-  //else
+  initDatabase();
   logger.info(`${NODE_ENV} level: ${LOG_LEVEL}, disabled: ${LOG_DISABLED}`);
   app.use(bodyParser());
   installREST(app);

@@ -19,7 +19,17 @@ const getAllCollections = async () => {
   return await prisma.mangacollection.findMany({
     select: {
       id: true,
-      manga: true,
+      manga: {
+        select: {
+          name: true,
+          chapters: true,
+          isFinished: true,
+          author: true,
+          release_date: true,
+          description: true,
+          genre: true
+        }
+      },
       user: true,
       start_date: true,
       end_date: true,
@@ -49,7 +59,7 @@ const updateCollectionById = async (id, start_date,
         }
       },
       user: true,
-      statusreading:true
+      statusreading: true
     },
     data: {
       start_date: start_date,

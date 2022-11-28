@@ -100,7 +100,7 @@ async function main() {
       description: "Titans",
       genre: {
         connect: {
-          id: "b269cf94-f9f6-40f8-bf5d-f9621e5db576"
+          id: "b269cf94-f9f6-40f8-bf5d-f9621e5db576",
         }
       }
     }

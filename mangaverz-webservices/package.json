@@ -19,11 +19,11 @@
     "prisma": "^4.6.1"
   },
   "scripts": {
-    "start": "npx env-cmd nodemon ./src/index.js",
+    "start": "npx env-cmd nodemon ./src/index.js && npx prisma migrate dev",
     "postinstall": "prisma generate",
     "devStart":"nodemon ./src/repository/index.js"
   },
-  "prisma":{
-    "seed":"node ./prisma/seed.js"
+  "prisma": {
+    "seed": "node ./src/prisma/seed.js"
   }
 }

@@ -14,7 +14,7 @@ model genre {
 }
 
 model manga {
-  id              String            @id @unique @default(uuid())
+  id              String            @id @default(uuid())
   name            String
   chapters        Int
   isFinished      Boolean
@@ -22,7 +22,7 @@ model manga {
   release_date    DateTime
   description     String
   genreId         String
-  genre           genre             @relation(fields: [genreId], references: [id], map: "Manga_genreId_fkey")
+  genre           genre             @relation(fields: [genreId], references: [id], onDelete: Cascade, map: "Manga_genreId_fkey")
   mangacollection mangacollection[]
 
   @@index([genreId], map: "Manga_genreId_fkey")
@@ -36,9 +36,9 @@ model mangacollection {
   mangaId         String
   userId          String
   statusReadingId String
-  manga           manga         @relation(fields: [mangaId], references: [id], map: "MangaCollection_mangaId_fkey")
-  statusreading   statusreading @relation(fields: [statusReadingId], references: [id], map: "MangaCollection_statusReadingId_fkey")
-  user            user          @relation(fields: [userId], references: [id], map: "MangaCollection_userId_fkey")
+  manga           manga         @relation(fields: [mangaId], references: [id], onDelete: Cascade, map: "MangaCollection_mangaId_fkey")
+  statusreading   statusreading @relation(fields: [statusReadingId], references: [id], onDelete: Cascade, map: "MangaCollection_statusReadingId_fkey")
+  user            user          @relation(fields: [userId], references: [id], onDelete: Cascade, map: "MangaCollection_userId_fkey")
 
   @@index([mangaId], map: "MangaCollection_mangaId_fkey")
   @@index([statusReadingId], map: "MangaCollection_statusReadingId_fkey")
