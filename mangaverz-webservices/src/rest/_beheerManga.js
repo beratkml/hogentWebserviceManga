@@ -1,6 +1,7 @@
 //Requires
 const Router = require('@koa/router');
 const prismaMangaService = require('../service/mangaf');
+const Joi = require('joi');
 
 
 //Router functies
@@ -18,6 +19,12 @@ const createManga = async (ctx) => {
 const getMangaById = async (ctx) => {
   // ctx.body = await mangaCollectionService.getById(ctx.params.id);
   ctx.body = await prismaMangaService.getMangaByIdPrisma(ctx.params.id);
+}
+
+getMangaById.validationScheme = {
+  params: Joi.object({
+    id: Joi.string()
+  })
 }
 
 const deleteMangaById = async (ctx) => {

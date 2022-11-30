@@ -2,9 +2,9 @@
 
 > Schrap hierboven wat niet past
 
-- Student: VOORNAAM NAAM
+- Student: Berat Kamali
 - Studentennummer: xxxxxxxxx
-- E-mailadres: voornaam.naam@student.hogent.be
+- E-mailadres: berat.kamali@student.hogent.be
 
 ## Vereisten
 
@@ -13,6 +13,8 @@ Ik verwacht dat volgende software reeds geïnstalleerd is:
 - [NodeJS](https://nodejs.org)
 - [Yarn](https://yarnpkg.com)
 - [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
+- [Prisma] (https://www.prisma.io/)
+- [ChakraUI] (https://chakra-ui.com/)
 - ...
 
 > Vul eventueel aan
@@ -20,6 +22,16 @@ Ik verwacht dat volgende software reeds geïnstalleerd is:
 ## Opstarten
 
 > Schrijf hier hoe we de applicatie starten (.env bestanden aanmaken, commando's om uit te voeren...)
+Back-end:
+- Yarn start
+Front-end:
+- Yarn start
+
+Env bestand bevat:
+NODE_ENV=development
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=root
+DATABASE_URL="mysql://root:root@localhost:3306/mangaverz"
 
 
 ## Testen
