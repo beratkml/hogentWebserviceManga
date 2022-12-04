@@ -1,7 +1,13 @@
 const prismaMangaRepo = require('../repository/mangasRepo');
-
+const ServiceError = require('../core/serviceError');
 const getMangaByIdPrisma = async (id) => {
-  return await prismaMangaRepo.mangaById(id);
+  const manga = await prismaMangaRepo.mangaById(id);
+  if (!manga) {
+    throw ServiceError.notFound(`Manga with id ${id} does not exist!`, {
+      id
+    });
+  }
+  return manga;
 }
 
 const getAllMangaPrisma = async () => {

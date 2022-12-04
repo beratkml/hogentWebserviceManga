@@ -28,6 +28,8 @@ const getAllManga = async () => {
       description: true,
       author: true,
       release_date: true,
+      chapters: true,
+      isFinished: true,
       genre: true
     }
   });
