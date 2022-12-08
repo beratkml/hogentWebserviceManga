@@ -3,6 +3,7 @@ const installMangaRouter = require('./_beheerManga');
 const installCollectionRouter = require('./_beheerCollection');
 const installHealthRouter = require('./_health');
 const installGenreRouter = require('./_beheerGenres');
+const installUserRouter = require('./_beheerUser');
 const Router = require('@koa/router');
 
 module.exports = (app) => {
@@ -10,6 +11,7 @@ module.exports = (app) => {
     prefix: '/api'
   });
 
+  installUserRouter(router);
   installMangaRouter(router);
   installGenreRouter(router);
   installCollectionRouter(router);

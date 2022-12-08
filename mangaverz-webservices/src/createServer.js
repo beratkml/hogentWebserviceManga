@@ -15,6 +15,9 @@ const {
   serializeError
 } = require('serialize-error');
 const ServiceError = require('./core/serviceError');
+const {
+  checkJwtToken
+} = require('./core/auth.js');
 
 const NODE_ENV = config.get('env')
 const LOG_LEVEL = config.get('log.level');
@@ -123,6 +126,16 @@ module.exports = async function createServer() {
     }
   });
   logger.info(`${NODE_ENV} level: ${LOG_LEVEL}, disabled: ${LOG_DISABLED}`);
+
+  app.use(checkJwtToken());
+
+  app.use(async (ctx, next) => {
+    logger.debug(`token: ${ctx.headers.authorization}`);
+    logger.debug(`user: ${JSON.stringify(ctx.state.user)}`); //geldig token, bevat de info uit de token
+    logger.debug(`invalid token, reason:${ctx.state.jwtOriginalError}`);
+    await next();
+  });
+
   app.use(bodyParser());
   installREST(app);
 

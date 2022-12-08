@@ -51,8 +51,7 @@ async function main() {
     update: {},
     create: {
       id: "f8f15f1a-1cea-4a2e-a853-7eeb7de1fc88",
-      username: "bob",
-      password: "bob123"
+      authid: "mapangpang"
     }
   })
   const status1 = await prisma.statusreading.upsert({

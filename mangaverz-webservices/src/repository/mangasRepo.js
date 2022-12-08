@@ -68,7 +68,8 @@ const addNewManga = async (
   author,
   release_date,
   description,
-  genreId
+  genreId,
+  userId
 ) => {
   const manga = await prisma.manga.create({
     data: {
@@ -78,7 +79,8 @@ const addNewManga = async (
       isFinished: isFinished,
       name: name,
       release_date: release_date,
-      genreId: genreId
+      genreId: genreId,
+      userId: userId
     }
   })
   return manga;

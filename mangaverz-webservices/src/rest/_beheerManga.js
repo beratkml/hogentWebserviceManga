@@ -3,10 +3,13 @@ const Router = require('@koa/router');
 const prismaMangaService = require('../service/mangaf');
 const Joi = require('joi');
 const validate = require('./_validation');
+const prismaUserSerice = require('../service/userf');
+const {
+  addUserInfo
+} = require('../core/auth');
 const {
   prisma
 } = require('@prisma/client');
-
 
 //Router functies
 const getAllMangas = async (ctx) => {
@@ -14,10 +17,23 @@ const getAllMangas = async (ctx) => {
 }
 
 const createManga = async (ctx) => {
-  ctx.body = await prismaMangaService.createMangaPrisma({
+  let userId = 0;
+  try {
+    const user = await prismaUserSerice.getByAuth0ID(ctx.state.user.sub);
+    userId = user.id;
+  } catch (err) {
+    await addUserInfo(ctx);
+    const user = await prismaUserSerice.register({
+      authid: ctx.state.user.sub,
+    });
+    userId = user.id;
+  }
+  const newManga = await prismaMangaService.createMangaPrisma({
     ...ctx.request.body,
-    release_date: new Date(ctx.request.body.release_date)
+    release_date: new Date(ctx.request.body.release_date),
+    userId
   });
+  ctx.body = newManga
   ctx.status = 201;
 }
 createManga.validationScheme = {
@@ -28,7 +44,7 @@ createManga.validationScheme = {
     author: Joi.string(),
     release_date: Joi.date().less('now'),
     description: Joi.string(),
-    genreId: Joi.string().required()
+    genreId: Joi.string().required(),
   }
 }
 

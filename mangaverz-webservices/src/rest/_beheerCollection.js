@@ -1,10 +1,10 @@
 const Router = require('@koa/router');
 const prismaCollectionService = require('../service/collectionf');
+const prismaUserSerice = require('../service/userf');
 
 const loadAllCollections = async (ctx) => {
   ctx.body = await prismaCollectionService.getAllCollections();
 }
-
 const addItemToCollection = async (ctx) => {
   ctx.body = await prismaCollectionService.addMangaToCollection({
     ...ctx.request.body,
