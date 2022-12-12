@@ -10,6 +10,10 @@ const {
 const {
   prisma
 } = require('@prisma/client');
+const {
+  permissions,
+  hasPermission
+} = require('../core/auth');
 
 //Router functies
 const getAllMangas = async (ctx) => {
@@ -31,7 +35,7 @@ const createManga = async (ctx) => {
   const newManga = await prismaMangaService.createMangaPrisma({
     ...ctx.request.body,
     release_date: new Date(ctx.request.body.release_date),
-    userId
+    userId: userId
   });
   ctx.body = newManga
   ctx.status = 201;
@@ -80,6 +84,7 @@ module.exports = (app) => {
     prefix: '/mangas'
   });
 
+  // hasPermission(permissions.loggedIn)
 
   //CRUD routers
   router.get('/', getAllMangas);

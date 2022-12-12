@@ -154,7 +154,7 @@ module.exports = async function createServer() {
 
     async stop() {
       app.removeAllListeners();
-      await shutdownData();
+      // await shutdownData();
       getLogger().info('Goodbye');
     },
   }
