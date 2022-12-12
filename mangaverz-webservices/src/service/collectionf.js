@@ -38,14 +38,14 @@ const addMangaToCollection = async ({
   current_chapter,
   status_reading
 }) => {
-  return await prismaCollectionRepo.addMangaToCollection({
+  return await prismaCollectionRepo.addMangaToCollection(
     mangaId,
     start_date,
     end_date,
     user_id,
     current_chapter,
     status_reading
-  });
+  );
 }
 
 module.exports = {

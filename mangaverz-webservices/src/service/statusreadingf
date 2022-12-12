@@ -1,0 +1,24 @@
+const prismaStatusRepo = require('../repository/statusReadingRepo');
+
+const getAllStatuses = async () => {
+  const status = await prismaStatusRepo.getAllStatuses();
+  return {
+    items: status,
+    count: status.length
+  }
+}
+
+const getStatusIdPrisma = async (id) => {
+  const status = await prismaStatusRepo.getStatusById(id);
+  if (!status) {
+    throw ServiceError.notFound(`Status with id ${id} does not exist`, {
+      id
+    });
+  }
+  return status;
+}
+
+module.exports = {
+  getAllStatuses,
+  getStatusIdPrisma
+}

@@ -21,6 +21,7 @@ const getAllCollections = async () => {
       id: true,
       manga: {
         select: {
+          id: true,
           name: true,
           chapters: true,
           isFinished: true,
@@ -75,14 +76,14 @@ const deleteColletionById = async (id) => {
   return await prisma.mangacollection.delete();
 }
 
-const addMangaToCollection = async ({
+const addMangaToCollection = async (
   mangaId,
   start_date,
   end_date,
   user_id,
   current_chapter,
   status_reading
-}) => {
+) => {
   return await prisma.mangacollection.create({
     data: {
       current_chapter: current_chapter,

@@ -1,16 +1,33 @@
 const Router = require('@koa/router');
 const prismaCollectionService = require('../service/collectionf');
 const prismaUserSerice = require('../service/userf');
+const {
+  addUserInfo
+} = require('../core/auth');
 
 const loadAllCollections = async (ctx) => {
   ctx.body = await prismaCollectionService.getAllCollections();
 }
 const addItemToCollection = async (ctx) => {
-  ctx.body = await prismaCollectionService.addMangaToCollection({
+  let userId = 0;
+  try {
+    const user = await prismaUserSerice.getByAuth0ID(ctx.state.user.sub);
+    userId = user.id;
+  } catch (err) {
+    await addUserInfo(ctx);
+    const user = await prismaUserSerice.register({
+      authid: ctx.state.user.sub,
+    });
+    userId = user.id;
+  }
+  const newManga = await prismaCollectionService.addMangaToCollection({
     ...ctx.request.body,
     start_date: new Date(ctx.request.body.start_date),
     end_date: new Date(ctx.request.body.end_date),
+    user_id: userId
   });
+  ctx.body = newManga
+  ctx.status = 201;
 }
 
 const getCollectionById = async (ctx) => {
