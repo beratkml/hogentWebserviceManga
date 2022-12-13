@@ -8,9 +8,9 @@ module.exports = {
     maxAge: 3 * 60 * 60,
   },
   database: {
-    host: '127.0.0.1',
-    port: 3306,
-    database: 'mangaverz',
+    host: 'vichogent.be ',
+    port: 40043,
+    database: '181265bk ',
     client: 'mysql2'
   }
 }

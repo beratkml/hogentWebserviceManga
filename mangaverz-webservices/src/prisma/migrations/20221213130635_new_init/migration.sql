@@ -1,17 +1,9 @@
-/*
-  Warnings:
-
-  - You are about to drop the `abc` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `abc`;
-
 -- CreateTable
 CREATE TABLE `genre` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `genre_id_key`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -25,6 +17,7 @@ CREATE TABLE `manga` (
     `release_date` DATETIME(3) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `genreId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NULL,
 
     INDEX `Manga_genreId_fkey`(`genreId`),
     PRIMARY KEY (`id`)
@@ -40,6 +33,7 @@ CREATE TABLE `mangacollection` (
     `userId` VARCHAR(191) NOT NULL,
     `statusReadingId` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `mangacollection_id_key`(`id`),
     INDEX `MangaCollection_mangaId_fkey`(`mangaId`),
     INDEX `MangaCollection_statusReadingId_fkey`(`statusReadingId`),
     INDEX `MangaCollection_userId_fkey`(`userId`),
@@ -51,27 +45,30 @@ CREATE TABLE `statusreading` (
     `id` VARCHAR(191) NOT NULL,
     `type` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `statusreading_id_key`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `user` (
     `id` VARCHAR(191) NOT NULL,
-    `username` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
+    `authid` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `User_username_key`(`username`),
+    UNIQUE INDEX `user_id_key`(`id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `manga` ADD CONSTRAINT `Manga_genreId_fkey` FOREIGN KEY (`genreId`) REFERENCES `genre`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `manga` ADD CONSTRAINT `Manga_genreId_fkey` FOREIGN KEY (`genreId`) REFERENCES `genre`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `mangacollection` ADD CONSTRAINT `MangaCollection_mangaId_fkey` FOREIGN KEY (`mangaId`) REFERENCES `manga`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `manga` ADD CONSTRAINT `manga_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `mangacollection` ADD CONSTRAINT `MangaCollection_statusReadingId_fkey` FOREIGN KEY (`statusReadingId`) REFERENCES `statusreading`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `mangacollection` ADD CONSTRAINT `MangaCollection_mangaId_fkey` FOREIGN KEY (`mangaId`) REFERENCES `manga`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `mangacollection` ADD CONSTRAINT `MangaCollection_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `mangacollection` ADD CONSTRAINT `MangaCollection_statusReadingId_fkey` FOREIGN KEY (`statusReadingId`) REFERENCES `statusreading`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `mangacollection` ADD CONSTRAINT `MangaCollection_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

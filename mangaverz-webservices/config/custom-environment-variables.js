@@ -1,7 +1,9 @@
 module.exports = {
   env: 'NODE_ENV',
+  port: 'PORT',
   database: {
     username: 'DATABASE_USERNAME',
+    port: 'DATABASE_PORT',
     password: 'DATABASE_PASSWORD'
   },
   auth: {
