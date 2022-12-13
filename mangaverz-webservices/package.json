@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "npx env-cmd nodemon ./src/index.js",
-    "postinstall": "npx prisma generate",
+    "postinstall": "npx prisma generate --schema=./src/prisma/schema.prisma",
     "devStart": "nodemon ./src/repository/index.js",
     "test": "npx env-cmd -f .env.test jest",
     "start:prod": "node src/index.js"
