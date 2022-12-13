@@ -18,6 +18,11 @@ const ServiceError = require('./core/serviceError');
 const {
   checkJwtToken
 } = require('./core/auth.js');
+const {
+  PrismaClient
+} = require('@prisma/client');
+
+const prisma = new PrismaClient();
 
 const NODE_ENV = config.get('env')
 const LOG_LEVEL = config.get('log.level');
