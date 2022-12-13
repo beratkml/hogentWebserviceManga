@@ -1,6 +1,6 @@
 const {
   execSync
-} = require('node:child_process');
+} = require('child_process');
 const config = require('config');
 const {
   getLogger
