@@ -3,8 +3,9 @@ module.exports = {
     level: 'info',
     disabled: false
   },
+  port: 9000,
   cors: {
-    origins: ['https://frontendweb-mangaverz.onrender.com/'],
+    origins: ['https://webservices-mangaverz.onrender.com'],
     maxAge: 3 * 60 * 60,
   },
   database: {
