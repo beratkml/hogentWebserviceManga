@@ -32,7 +32,7 @@
     "postinstall": "prisma generate",
     "devStart": "nodemon ./src/repository/index.js",
     "test": "npx env-cmd -f .env.test jest",
-    "start:prod": "node src/index.js"
+    "start:prod": "node mangaverz-webservices/src/index.js"
   },
   "test": "jest",
   "test:coverage": "yarn test --coverage",
