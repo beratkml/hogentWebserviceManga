@@ -4,9 +4,7 @@ const {
 const {
   query
 } = require('winston');
-const prisma = new PrismaClient({
-  log: ["query"]
-});
+const prisma = new PrismaClient();
 module.exports = {
   prisma
 }
