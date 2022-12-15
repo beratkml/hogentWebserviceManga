@@ -37,7 +37,7 @@ const createManga = async (ctx) => {
     release_date: new Date(ctx.request.body.release_date),
     userId: userId
   });
-  ctx.body = newManga
+  ctx.body = newManga;
   ctx.status = 201;
 }
 createManga.validationScheme = {
@@ -49,13 +49,14 @@ createManga.validationScheme = {
     release_date: Joi.date().less('now'),
     description: Joi.string(),
     genreId: Joi.string().required(),
+    userId: Joi.string()
   }
 }
 
 
 const getMangaById = async (ctx) => {
-  // ctx.body = await mangaCollectionService.getById(ctx.params.id);
   ctx.body = await prismaMangaService.getMangaByIdPrisma(ctx.params.id);
+  ctx.status = 200;
 }
 getMangaById.validationScheme = {
   params: Joi.object({
@@ -68,15 +69,12 @@ const deleteMangaById = async (ctx) => {
 }
 
 const updateMangaById = async (ctx) => {
-  // ctx.body = mangaCollectionService.update(ctx.params.id, {
-  //   ...ctx.request.body,
-  //   start_date: new Date(ctx.request.body.start_date),
-  //   end_date: new Date(ctx.request.body.end_date)
-  // })
-  ctx.body = await prismaMangaService.updateMangaByIdPrisma(ctx.params.id, {
+  ctx.body = await prismaMangaService.updateMangaByIdPrisma({
     ...ctx.request.body,
+    id: ctx.params.id,
     release_date: new Date(ctx.request.body.release_date)
   });
+  ctx.status = 200;
 }
 
 module.exports = (app) => {
@@ -85,7 +83,6 @@ module.exports = (app) => {
   });
 
   // hasPermission(permissions.loggedIn)
-
   //CRUD routers
   router.get('/', getAllMangas);
   router.get('/:id', validate(getMangaById.validationScheme), getMangaById);

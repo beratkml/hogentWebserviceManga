@@ -52,10 +52,10 @@ const updateMangaById = async (id,
       author: author,
       chapters: chapters,
       description: description,
-      genreId: genreId,
       isFinished: isFinished,
       name: name,
-      release_date: release_date
+      release_date: release_date,
+      genreId: genreId,
     }
   })
   return manga;

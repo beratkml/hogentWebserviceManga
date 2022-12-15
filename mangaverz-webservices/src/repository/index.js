@@ -9,7 +9,10 @@ const {
 const NODE_ENV = config.get('env')
 
 function initDatabase() {
-  execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
+  if (NODE_ENV === 'development') {
+    execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
+  }
+
 }
 
 module.exports = {

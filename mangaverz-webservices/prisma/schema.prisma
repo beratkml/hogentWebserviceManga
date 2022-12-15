@@ -1,10 +1,13 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://root:root@localhost:3306/mangaverz-test"
 }
 
 model genre {
@@ -14,7 +17,7 @@ model genre {
 }
 
 model manga {
-  id              String            @id @unique @default(uuid())
+  id              String            @id @default(uuid())
   name            String
   chapters        Int
   isFinished      Boolean

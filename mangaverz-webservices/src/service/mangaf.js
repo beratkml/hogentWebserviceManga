@@ -39,12 +39,15 @@ const deleteMangaPrisma = async (id) => {
 
 const updateMangaByIdPrisma = async ({
   id,
-  startDate,
-  endDate,
-  current_chapter,
-  status_reading
+  name,
+  chapters,
+  isFinished,
+  author,
+  release_date,
+  description,
+  genreId
 }) => {
-  const data = await prismaMangaRepo.updateMangaById(id, startDate, endDate, current_chapter, release_date, status_reading);
+  const data = await prismaMangaRepo.updateMangaById(id, name, chapters, isFinished, author, release_date, description, genreId);
   console.log(data);
   return data;
 }
