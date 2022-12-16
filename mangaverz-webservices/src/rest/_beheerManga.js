@@ -48,8 +48,7 @@ createManga.validationScheme = {
     author: Joi.string(),
     release_date: Joi.date().less('now'),
     description: Joi.string(),
-    genreId: Joi.string().required(),
-    userId: Joi.string()
+    genreId: Joi.string().required()
   }
 }
 
