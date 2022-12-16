@@ -85,8 +85,8 @@ module.exports = (app) => {
   //CRUD routers
   router.get('/', getAllMangas);
   router.get('/:id', validate(getMangaById.validationScheme), getMangaById);
-  router.post('/', validate(createManga.validationScheme), createManga);
-  router.put('/:id', updateMangaById);
+  router.post('/', hasPermission(permissions.write), validate(createManga.validationScheme), createManga);
+  router.put('/:id', hasPermission(permissions.write), updateMangaById);
   router.delete('/:id', deleteMangaById);
   app.use(router.routes()).use(router.allowedMethods());
 }
