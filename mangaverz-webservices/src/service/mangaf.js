@@ -25,10 +25,11 @@ const createMangaPrisma = async ({
   author,
   release_date,
   description,
+  thumbnail,
   genreId,
   userId
 }) => {
-  const data = await prismaMangaRepo.addNewManga(name, chapters, isFinished, author, release_date, description, genreId, userId);
+  const data = await prismaMangaRepo.addNewManga(name, chapters, isFinished, author, release_date, description, thumbnail, genreId, userId);
   return data;
 }
 

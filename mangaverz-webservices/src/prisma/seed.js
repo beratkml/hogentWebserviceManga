@@ -4,24 +4,6 @@ const {
 
 
 async function main() {
-  const role1 = await prisma.roles.upsert({
-    where: {
-      id: 99
-    },
-    update: {},
-    create: {
-      name: "admin"
-    }
-  });
-  const role2 = await prisma.roles.upsert({
-    where: {
-      id: 98
-    },
-    update: {},
-    create: {
-      name: "user"
-    }
-  });
   const genre1 = await prisma.genre.upsert({
     where: {
       id: "1"
@@ -71,11 +53,6 @@ async function main() {
       id: "f8f15f1a-1cea-4a2e-a853-7eeb7de1fc88",
       name: "testy",
       authid: "mapangpang",
-      roles: {
-        connect: {
-          id: 1
-        }
-      }
     }
   })
   const user1 = await prisma.user.upsert({
@@ -87,11 +64,6 @@ async function main() {
       id: "lkqsjlkjfdfj",
       name: "zes",
       authid: "zesty",
-      roles: {
-        connect: {
-          id: 2
-        }
-      }
     }
   })
   const status1 = await prisma.statusreading.upsert({
@@ -137,6 +109,7 @@ async function main() {
       author: "Hayjime Isayama",
       release_date: new Date(2013, 04, 07),
       description: "Titans",
+      thumbnail: "null",
       genre: {
         connect: {
           id: "b269cf94-f9f6-40f8-bf5d-f9621e5db576",

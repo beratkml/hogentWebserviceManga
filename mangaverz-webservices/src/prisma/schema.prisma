@@ -21,6 +21,7 @@ model manga {
   author          String
   release_date    DateTime
   description     String
+  thumbnail       String
   genreId         String
   genre           genre             @relation(fields: [genreId], references: [id], onDelete: Cascade, map: "Manga_genreId_fkey")
   mangacollection mangacollection[]
@@ -59,12 +60,4 @@ model user {
   name            String
   mangacollection mangacollection[]
   manga           manga[]
-  roles           roles?            @relation(fields: [rolesId], references: [id])
-  rolesId         Int?
-}
-
-model roles {
-  id   Int    @id @unique @default(autoincrement())
-  name String
-  user user[]
 }

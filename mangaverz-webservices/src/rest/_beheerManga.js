@@ -49,6 +49,7 @@ createManga.validationScheme = {
     author: Joi.string(),
     release_date: Joi.date().less('now'),
     description: Joi.string(),
+    thumbnail: Joi.string(),
     genreId: Joi.string().required()
   }
 }
@@ -67,11 +68,25 @@ const deleteMangaById = async (ctx) => {
 }
 
 const updateMangaById = async (ctx) => {
-  ctx.body = await prismaMangaService.updateMangaByIdPrisma({
+  let userId = 0;
+  try {
+    const user = await prismaUserSerice.getByAuth0ID(ctx.state.user.sub);
+    userId = user.id;
+  } catch (err) {
+    await addUserInfo(ctx);
+    const user = await prismaUserSerice.register({
+      authid: ctx.state.user.sub,
+      name: ctx.state.user.name
+    });
+    userId = user.id;
+  }
+  const newManga = await prismaMangaService.updateMangaByIdPrisma({
     ...ctx.request.body,
     id: ctx.params.id,
+    userId: userId,
     release_date: new Date(ctx.request.body.release_date)
   });
+  ctx.body = newManga;
   ctx.status = 200;
 }
 

@@ -14,6 +14,7 @@ const mangaById = async (id) => {
       author: true,
       chapters: true,
       isFinished: true,
+      thumbnail: true,
       genre: true
     }
   })
@@ -30,6 +31,7 @@ const getAllManga = async () => {
       release_date: true,
       chapters: true,
       isFinished: true,
+      thumbnail: true,
       genre: true
     }
   });
@@ -68,6 +70,7 @@ const addNewManga = async (
   author,
   release_date,
   description,
+  thumbnail,
   genreId,
   userId
 ) => {
@@ -79,6 +82,7 @@ const addNewManga = async (
       isFinished: isFinished,
       name: name,
       release_date: release_date,
+      thumbnail: thumbnail,
       genreId: genreId,
       userId: userId
     }
