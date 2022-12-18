@@ -38,7 +38,7 @@
   "test": "jest",
   "test:coverage": "yarn test --coverage",
   "prisma": {
-    "seed": "node ./src/prisma/seed.js"
+    "seed": "node prisma/seed.js"
   },
   "jest": {
     "testPathIgnorePatterns": [
