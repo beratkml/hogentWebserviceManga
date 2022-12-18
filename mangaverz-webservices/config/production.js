@@ -4,7 +4,7 @@ module.exports = {
     disabled: false
   },
   cors: {
-    origins: ['https://frontendweb-mangaverz.onrender.com'],
+    origins: ['http://localhost:3000'],
     maxAge: 3 * 60 * 60,
   },
   database: {
@@ -14,3 +14,4 @@ module.exports = {
     client: 'mysql2'
   }
 }
+// https://frontendweb-mangaverz.onrender.com

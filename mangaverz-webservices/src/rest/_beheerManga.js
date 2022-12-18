@@ -29,6 +29,7 @@ const createManga = async (ctx) => {
     await addUserInfo(ctx);
     const user = await prismaUserSerice.register({
       authid: ctx.state.user.sub,
+      name: ctx.state.user.name
     });
     userId = user.id;
   }
@@ -51,8 +52,6 @@ createManga.validationScheme = {
     genreId: Joi.string().required()
   }
 }
-
-
 const getMangaById = async (ctx) => {
   ctx.body = await prismaMangaService.getMangaByIdPrisma(ctx.params.id);
   ctx.status = 200;

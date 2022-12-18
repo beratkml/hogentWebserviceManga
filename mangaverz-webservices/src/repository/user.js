@@ -4,11 +4,13 @@ const {
 
 //create - update met autho0
 const addNewUser = async ({
-  authid
+  authid,
+  name
 }) => {
   const user = await prisma.user.create({
     data: {
-      authid: authid
+      authid: authid,
+      name: name
     }
   })
   return user;

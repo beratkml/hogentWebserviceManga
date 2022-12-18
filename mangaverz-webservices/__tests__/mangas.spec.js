@@ -26,6 +26,7 @@ const data = {
   }],
   user: [{
     id: "1",
+    name: config.get('auth.testUser.userId'),
     authid: config.get('auth.testUser.userId')
   }]
 }
@@ -34,16 +35,12 @@ describe('mangas', () => {
   let request;
   let prisma;
   let authHeader;
-  beforeAll(async () => {
-    prisma = new PrismaClient({
-      log: ["query"]
-    })
-  });
-
   withServer(({
+    prisma: p,
     request: r,
     authHeader: a
   }) => {
+    prisma = p;
     request = r;
     authHeader = a;
   });
@@ -54,7 +51,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
-          authid: "mapangpang"
+          name: data.user[0].name,
+          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -92,7 +90,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
-          authid: "mapangpang"
+          name: data.user[0].name,
+          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -144,6 +143,7 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
+          name: data.user[0].name,
           authid: "mapangpang"
         }
       });
@@ -185,7 +185,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
-          authid: "mapangpang"
+          name: data.user[0].name,
+          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -248,6 +249,7 @@ describe('mangas', () => {
     beforeAll(async () => {
       await prisma.user.create({
         data: {
+          name: data.user[0].name,
           authid: data.user[0].authid
         }
       });
@@ -270,7 +272,7 @@ describe('mangas', () => {
         description: "test",
         genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10",
         userId: "f8f15f1a-1cea-4a2e-a853-7eeb7de1fc88"
-      }).set('Authorization', authHeader);;
+      }).set('Authorization', authHeader);
       expect(response.status).toBe(201);
     });
   });

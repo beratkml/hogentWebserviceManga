@@ -56,6 +56,15 @@ model statusreading {
 model user {
   id              String            @id @unique @default(uuid())
   authid          String
+  name            String
   mangacollection mangacollection[]
   manga           manga[]
+  roles           roles?            @relation(fields: [rolesId], references: [id])
+  rolesId         Int?
+}
+
+model roles {
+  id   Int    @id @unique @default(autoincrement())
+  name String
+  user user[]
 }

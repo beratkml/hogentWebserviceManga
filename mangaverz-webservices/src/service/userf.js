@@ -5,10 +5,12 @@ const {
 } = require('../core/logging');
 
 const register = async ({
-  authid
+  authid,
+  name
 }) => {
   return await prismaUserRepo.addNewUser({
-    authid
+    authid,
+    name
   });
 }
 

@@ -2,9 +2,12 @@
 const axios = require('axios'); // 👈 1
 const config = require('config'); // 👈 1
 const supertest = require('supertest');
+// const {
+//   PrismaClient
+// } = require('@prisma/client');
 const {
-  PrismaClient
-} = require('@prisma/client');
+  prisma
+} = require('../src/prisma/prisma');
 const createServer = require('../src/createServer');
 
 
@@ -21,7 +24,7 @@ const fetchAccessToken = async () => {
   }, {
     headers: {
       "Accept-Encoding": "gzip,deflate,compress"
-    } // 👈 5
+    }
   });
 
   return response.data.access_token;
@@ -35,9 +38,7 @@ const withServer = (setter) => {
     const token = await fetchAccessToken(); // 👈 4
 
     setter({
-      prisma: new PrismaClient({
-        log: ["query"]
-      }),
+      prisma: prisma,
       request: supertest(server.getApp().callback()),
       authHeader: `Bearer ${token}`, // 👈 4
     });

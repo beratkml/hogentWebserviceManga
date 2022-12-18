@@ -4,6 +4,24 @@ const {
 
 
 async function main() {
+  const role1 = await prisma.roles.upsert({
+    where: {
+      id: 99
+    },
+    update: {},
+    create: {
+      name: "admin"
+    }
+  });
+  const role2 = await prisma.roles.upsert({
+    where: {
+      id: 98
+    },
+    update: {},
+    create: {
+      name: "user"
+    }
+  });
   const genre1 = await prisma.genre.upsert({
     where: {
       id: "1"
@@ -51,7 +69,29 @@ async function main() {
     update: {},
     create: {
       id: "f8f15f1a-1cea-4a2e-a853-7eeb7de1fc88",
-      authid: "mapangpang"
+      name: "testy",
+      authid: "mapangpang",
+      roles: {
+        connect: {
+          id: 1
+        }
+      }
+    }
+  })
+  const user1 = await prisma.user.upsert({
+    where: {
+      id: "0"
+    },
+    update: {},
+    create: {
+      id: "lkqsjlkjfdfj",
+      name: "zes",
+      authid: "zesty",
+      roles: {
+        connect: {
+          id: 2
+        }
+      }
     }
   })
   const status1 = await prisma.statusreading.upsert({
