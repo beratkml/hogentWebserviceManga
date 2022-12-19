@@ -8,9 +8,32 @@ const getCollectionById = async (id) => {
       id: id
     },
     select: {
-      manga: true,
-      user: true,
-      statusreading: true
+      manga: {
+        select: {
+          id: true,
+          name: true,
+          chapters: true,
+          isFinished: true,
+          author: true,
+          release_date: true,
+          description: true,
+          thumbnail: true,
+          genre: true
+        }
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          authid: true,
+        }
+      },
+      statusreading: {
+        select: {
+          id: true,
+          type: true
+        }
+      }
     }
   })
 }
@@ -28,14 +51,26 @@ const getAllCollections = async () => {
           author: true,
           release_date: true,
           description: true,
+          thumbnail: true,
           genre: true
         }
       },
-      user: true,
+      user: {
+        select: {
+          id: true,
+          authid: true,
+          name: true
+        }
+      },
       start_date: true,
       end_date: true,
       current_chapter: true,
-      statusreading: true
+      statusreading: {
+        select: {
+          id: true,
+          type: true
+        }
+      }
     }
   });
 }
@@ -56,11 +91,23 @@ const updateCollectionById = async (id, start_date,
           author: true,
           chapters: true,
           isFinished: true,
+          thumbnail: true,
           genre: true
         }
       },
-      user: true,
-      statusreading: true
+      user: {
+        select: {
+          id: true,
+          name: true,
+          authid: true
+        }
+      },
+      statusreading: {
+        select: {
+          id: true,
+          type: true
+        }
+      }
     },
     data: {
       start_date: start_date,

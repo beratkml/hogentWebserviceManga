@@ -51,8 +51,9 @@ async function main() {
     update: {},
     create: {
       id: "f8f15f1a-1cea-4a2e-a853-7eeb7de1fc88",
-      name: "testy",
       authid: "mapangpang",
+      name: "testy",
+
     }
   })
   const user1 = await prisma.user.upsert({
@@ -62,8 +63,9 @@ async function main() {
     update: {},
     create: {
       id: "lkqsjlkjfdfj",
-      name: "zes",
       authid: "zesty",
+      name: "zes",
+
     }
   })
   const status1 = await prisma.statusreading.upsert({

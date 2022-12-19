@@ -17,6 +17,7 @@ const data = {
     author: "Tatsuke",
     release_date: new Date("2013-04-17"),
     description: "Test",
+    thumbnail: "abcdef",
     genreId: "1",
     userId: "1"
   }],
@@ -27,9 +28,11 @@ const data = {
   user: [{
     id: "1",
     name: config.get('auth.testUser.userId'),
-    authid: config.get('auth.testUser.userId')
+    authid: config.get('auth.testUser.username')
   }]
 }
+// config.get('auth.testUser.userId')
+// config.get('auth.testUser.username')
 
 describe('mangas', () => {
   let request;
@@ -51,8 +54,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
+          authid: data.user[0].authid,
           name: data.user[0].name,
-          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -70,6 +73,7 @@ describe('mangas', () => {
           author: data.mangas[0].author,
           release_date: data.mangas[0].release_date,
           description: data.mangas[0].description,
+          thumbnail: data.mangas[0].thumbnail,
           genreId: data.genre[0].id,
           userId: data.user[0].id
         }
@@ -90,8 +94,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
+          authid: data.user[0].authid,
           name: data.user[0].name,
-          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -102,15 +106,16 @@ describe('mangas', () => {
       });
       await prisma.manga.create({
         data: {
-          id: "513d1109-975d-4f7c-9cab-f68a790f5279",
+          id: data.mangas[0].id,
           name: data.mangas[0].name,
           chapters: data.mangas[0].chapters,
           isFinished: data.mangas[0].isFinished,
           author: data.mangas[0].author,
           release_date: data.mangas[0].release_date,
           description: data.mangas[0].description,
-          genreId: data.genre[0].id,
-          userId: data.user[0].id
+          thumbnail: data.mangas[0].thumbnail,
+          genreId: data.mangas[0].genreId,
+          userId: data.mangas[0].userId,
         }
       });
     });
@@ -125,6 +130,7 @@ describe('mangas', () => {
         author: data.mangas[0].author,
         chapters: data.mangas[0].chapters,
         isFinished: data.mangas[0].isFinished,
+        thumbnail: data.mangas[0].thumbnail,
         genre: {
           id: data.genre[0].id,
           name: data.genre[0].name
@@ -143,8 +149,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
+          authid: data.user[0].authid,
           name: data.user[0].name,
-          authid: "mapangpang"
         }
       });
       await prisma.genre.create({
@@ -155,13 +161,14 @@ describe('mangas', () => {
       });
       await prisma.manga.create({
         data: {
-          id: "513d1109-975d-4f7c-9cab-f68a790f5279",
+          id: data.mangas[0].id,
           name: data.mangas[0].name,
           chapters: data.mangas[0].chapters,
           isFinished: data.mangas[0].isFinished,
           author: data.mangas[0].author,
           release_date: data.mangas[0].release_date,
           description: data.mangas[0].description,
+          thumbnail: data.mangas[0].thumbnail,
           genreId: data.genre[0].id,
           userId: data.user[0].id
         }
@@ -185,8 +192,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
+          authid: data.user[0].authid,
           name: data.user[0].name,
-          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -197,13 +204,14 @@ describe('mangas', () => {
       });
       await prisma.manga.create({
         data: {
-          id: "513d1109-975d-4f7c-9cab-f68a790f5279",
+          id: data.mangas[0].id,
           name: data.mangas[0].name,
           chapters: data.mangas[0].chapters,
           isFinished: data.mangas[0].isFinished,
           author: data.mangas[0].author,
           release_date: data.mangas[0].release_date,
           description: data.mangas[0].description,
+          thumbnail: data.mangas[0].thumbnail,
           genreId: data.genre[0].id,
           userId: data.user[0].id
         }
@@ -223,10 +231,11 @@ describe('mangas', () => {
           author: "Tatsuki Fujimoto",
           release_date: "2017-05-12",
           description: "test",
+          thumbnail: "kjshqlfjkf",
           genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10"
-        });
+        }).set('Authorization', authHeader);
 
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(201);
       expect(response.body.id).toBeTruthy();
       expect(response.body.chapters).toBe(79);
       expect(response.body.release_date).toBe("2017-05-12T00:00:00.000Z");
@@ -239,6 +248,7 @@ describe('mangas', () => {
         author: "Tatsuki Fujimoto",
         release_date: "2017-05-12T00:00:00.000Z",
         description: "test",
+        thumbnail: "abcdef",
         genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10",
         userId: "1"
       });
@@ -249,8 +259,8 @@ describe('mangas', () => {
     beforeAll(async () => {
       await prisma.user.create({
         data: {
+          authid: data.user[0].authid,
           name: data.user[0].name,
-          authid: data.user[0].authid
         }
       });
       await prisma.genre.create({
@@ -269,11 +279,16 @@ describe('mangas', () => {
         isFinished: false,
         author: "Tatsuki Fujimoto",
         release_date: "2017-05-12",
-        description: "test",
-        genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10",
-        userId: "f8f15f1a-1cea-4a2e-a853-7eeb7de1fc88"
+        description: "The series focuses on Monkey D. Luffy, a young man made of rubber, who, inspired by his childhood idol, the powerful pirate Red-Haired Shanks, sets off on a journey from the East Blue Sea to find the mythical treasure, the One Piece, and proclaim himself the King of the Pirates.",
+        thumbnail: "lsjlmqkdf",
+        genreId: "2503c3bb-7f6d-4eda-bed5-af163b7f5287",
+
       }).set('Authorization', authHeader);
       expect(response.status).toBe(201);
+      expect(response.body.id).toBeTruthy();
+      expect(response.body.chapters).toBe(79);
+      expect(response.body.release_date).toBe("2017-05-12T00:00:00.000Z");
+      expect(response.body.author).toBe("Tatsuki Fujimoto");
     });
   });
 });

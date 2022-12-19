@@ -87,7 +87,7 @@ const updateMangaById = async (ctx) => {
     release_date: new Date(ctx.request.body.release_date)
   });
   ctx.body = newManga;
-  ctx.status = 200;
+  ctx.status = 201;
 }
 
 module.exports = (app) => {
@@ -104,3 +104,5 @@ module.exports = (app) => {
   router.delete('/:id', deleteMangaById);
   app.use(router.routes()).use(router.allowedMethods());
 }
+// 
+// 

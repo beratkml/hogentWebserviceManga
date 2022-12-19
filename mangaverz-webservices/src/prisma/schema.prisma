@@ -20,7 +20,7 @@ model manga {
   isFinished      Boolean
   author          String
   release_date    DateTime
-  description     String
+  description     String            @db.LongText
   thumbnail       String
   genreId         String
   genre           genre             @relation(fields: [genreId], references: [id], onDelete: Cascade, map: "Manga_genreId_fkey")
