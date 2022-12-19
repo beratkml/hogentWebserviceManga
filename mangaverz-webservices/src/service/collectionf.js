@@ -12,17 +12,14 @@ const getAllCollections = async () => {
   }
 }
 
-const updateCollectionById = async (id, {
+const updateCollectionById = async ({
+  id,
   start_date,
   end_date,
   current_chapter,
   status_reading
 }) => {
-  const data = await prismaCollectionRepo.updateCollectionById(id,
-    start_date,
-    end_date,
-    current_chapter,
-    status_reading);
+  const data = await prismaCollectionRepo.updateCollectionById(id, start_date, end_date, current_chapter, status_reading);
   return data;
 }
 

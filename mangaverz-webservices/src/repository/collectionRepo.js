@@ -120,7 +120,11 @@ const updateCollectionById = async (id, start_date,
 }
 
 const deleteColletionById = async (id) => {
-  return await prisma.mangacollection.delete();
+  await prisma.mangacollection.delete({
+    where: {
+      id: id
+    }
+  })
 }
 
 const addMangaToCollection = async (
