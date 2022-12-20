@@ -9,11 +9,13 @@ const mangaById = async (id) => {
       id: id
     },
     select: {
+      id: true,
       name: true,
       description: true,
       author: true,
       chapters: true,
       isFinished: true,
+      release_date: true,
       thumbnail: true,
       genre: true
     }

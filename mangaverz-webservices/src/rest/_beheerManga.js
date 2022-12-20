@@ -89,6 +89,17 @@ const updateMangaById = async (ctx) => {
   ctx.body = newManga;
   ctx.status = 201;
 }
+updateMangaById.validationScheme = {
+  body: {
+    name: Joi.string().optional(),
+    chapters: Joi.number().integer().optional(),
+    isFinished: Joi.boolean().optional(),
+    author: Joi.string().optional(),
+    release_date: Joi.date().less('now').optional(),
+    description: Joi.string().optional(),
+    genreId: Joi.string().optional()
+  }
+}
 
 module.exports = (app) => {
   const router = new Router({
@@ -100,7 +111,7 @@ module.exports = (app) => {
   router.get('/', getAllMangas);
   router.get('/:id', validate(getMangaById.validationScheme), getMangaById);
   router.post('/', hasPermission(permissions.write), validate(createManga.validationScheme), createManga);
-  router.put('/:id', hasPermission(permissions.write), updateMangaById);
+  router.put('/:id', hasPermission(permissions.write), validate(updateMangaById.validationScheme), updateMangaById);
   router.delete('/:id', deleteMangaById);
   app.use(router.routes()).use(router.allowedMethods());
 }
