@@ -65,7 +65,6 @@ async function main() {
       id: "lkqsjlkjfdfj",
       authid: "zesty",
       name: "zes",
-
     }
   })
   const status1 = await prisma.statusreading.upsert({

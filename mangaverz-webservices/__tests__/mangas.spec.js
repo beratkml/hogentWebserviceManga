@@ -15,7 +15,7 @@ const data = {
     chapters: 139,
     isFinished: true,
     author: "Tatsuke",
-    release_date: new Date("2013-04-17"),
+    release_date: "2013-04-17T00:00:00.000Z",
     description: "Test",
     thumbnail: "abcdef",
     genreId: "1",
@@ -31,6 +31,10 @@ const data = {
     authid: config.get('auth.testUser.username')
   }]
 }
+
+const mangaIdToDelete =["513d1109-975d-4f7c-9cab-f68a790f5279"];
+const genreToDelete =["1"];
+const userToDelete =["1"];
 // config.get('auth.testUser.userId')
 // config.get('auth.testUser.username')
 
@@ -94,8 +98,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
-          authid: data.user[0].authid,
           name: data.user[0].name,
+          authid: data.user[0].authid,
         }
       });
       await prisma.genre.create({
@@ -125,9 +129,11 @@ describe('mangas', () => {
       const response = await request.get(`/api/mangas/${mangaById}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
+        id:data.mangas[0].id,
         name: data.mangas[0].name,
         description: data.mangas[0].description,
         author: data.mangas[0].author,
+        release_date:data.mangas[0].release_date,
         chapters: data.mangas[0].chapters,
         isFinished: data.mangas[0].isFinished,
         thumbnail: data.mangas[0].thumbnail,
@@ -149,8 +155,9 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
-          authid: data.user[0].authid,
           name: data.user[0].name,
+          authid: data.user[0].authid,
+          
         }
       });
       await prisma.genre.create({
@@ -192,8 +199,8 @@ describe('mangas', () => {
       await prisma.user.create({
         data: {
           id: data.user[0].id,
-          authid: data.user[0].authid,
           name: data.user[0].name,
+          authid: data.user[0].authid,
         }
       });
       await prisma.genre.create({
@@ -229,16 +236,15 @@ describe('mangas', () => {
           chapters: 79,
           isFinished: false,
           author: "Tatsuki Fujimoto",
-          release_date: "2017-05-12",
+          release_date: "2013-04-17T00:00:00.000Z",
           description: "test",
-          thumbnail: "kjshqlfjkf",
           genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10"
         }).set('Authorization', authHeader);
 
       expect(response.status).toBe(201);
       expect(response.body.id).toBeTruthy();
       expect(response.body.chapters).toBe(79);
-      expect(response.body.release_date).toBe("2017-05-12T00:00:00.000Z");
+      expect(response.body.release_date).toBe("2013-04-17T00:00:00.000Z");
       expect(response.body.author).toBe("Tatsuki Fujimoto");
       expect(response.body).toEqual({
         id: "513d1109-975d-4f7c-9cab-f68a790f5279",
@@ -246,7 +252,7 @@ describe('mangas', () => {
         chapters: 79,
         isFinished: false,
         author: "Tatsuki Fujimoto",
-        release_date: "2017-05-12T00:00:00.000Z",
+        release_date: "2013-04-17T00:00:00.000Z",
         description: "test",
         thumbnail: "abcdef",
         genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10",
@@ -261,6 +267,7 @@ describe('mangas', () => {
         data: {
           authid: data.user[0].authid,
           name: data.user[0].name,
+          
         }
       });
       await prisma.genre.create({

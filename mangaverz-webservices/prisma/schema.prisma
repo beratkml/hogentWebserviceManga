@@ -25,6 +25,7 @@ model manga {
   release_date    DateTime
   description     String
   genreId         String
+  thumbnail       String
   genre           genre             @relation(fields: [genreId], references: [id], onDelete: Cascade, map: "Manga_genreId_fkey")
   mangacollection mangacollection[]
   user            user?             @relation(fields: [userId], references: [id])
@@ -59,6 +60,7 @@ model statusreading {
 model user {
   id              String            @id @unique @default(uuid())
   authid          String
+  name            String
   mangacollection mangacollection[]
   manga           manga[]
 }
