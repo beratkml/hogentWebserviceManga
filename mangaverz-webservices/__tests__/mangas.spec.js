@@ -1,36 +1,16 @@
 const config = require('config');
 const {
-  withServer
+  withServer,data
 } = require('./helpers');
+
 const {
   execSync
 } = require('child_process');
+
 const {
   PrismaClient
 } = require('@prisma/client');
-const data = {
-  mangas: [{
-    id: "513d1109-975d-4f7c-9cab-f68a790f5279",
-    name: "One Piece",
-    chapters: 139,
-    isFinished: true,
-    author: "Tatsuke",
-    release_date: "2013-04-17T00:00:00.000Z",
-    description: "Test",
-    thumbnail: "abcdef",
-    genreId: "1",
-    userId: "1"
-  }],
-  genre: [{
-    id: "1",
-    name: "drama"
-  }],
-  user: [{
-    id: "1",
-    name: config.get('auth.testUser.userId'),
-    authid: config.get('auth.testUser.username')
-  }]
-}
+
 
 const mangaIdToDelete =["513d1109-975d-4f7c-9cab-f68a790f5279"];
 const genreToDelete =["1"];
@@ -54,38 +34,6 @@ describe('mangas', () => {
   const url = '/api/mangas';
 
   describe('GET /api/mangas', () => {
-    beforeAll(async () => {
-      await prisma.user.create({
-        data: {
-          id: data.user[0].id,
-          authid: data.user[0].authid,
-          name: data.user[0].name,
-        }
-      });
-      await prisma.genre.create({
-        data: {
-          id: data.genre[0].id,
-          name: data.genre[0].name
-        }
-      });
-      await prisma.manga.create({
-        data: {
-          id: data.mangas[0].id,
-          name: data.mangas[0].name,
-          chapters: data.mangas[0].chapters,
-          isFinished: data.mangas[0].isFinished,
-          author: data.mangas[0].author,
-          release_date: data.mangas[0].release_date,
-          description: data.mangas[0].description,
-          thumbnail: data.mangas[0].thumbnail,
-          genreId: data.genre[0].id,
-          userId: data.user[0].id
-        }
-      });
-    });
-    afterAll(async () => {
-      execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
-    });
     it('should return 200 and all mangas', async () => {
       const response = await request.get(url).set('Authorization', authHeader);
       expect(response.status).toBe(200);
@@ -94,39 +42,9 @@ describe('mangas', () => {
   });
 
   describe('GET /api/mangas/:id', () => {
-    beforeAll(async () => {
-      await prisma.user.create({
-        data: {
-          id: data.user[0].id,
-          name: data.user[0].name,
-          authid: data.user[0].authid,
-        }
-      });
-      await prisma.genre.create({
-        data: {
-          id: data.genre[0].id,
-          name: data.genre[0].name
-        }
-      });
-      await prisma.manga.create({
-        data: {
-          id: data.mangas[0].id,
-          name: data.mangas[0].name,
-          chapters: data.mangas[0].chapters,
-          isFinished: data.mangas[0].isFinished,
-          author: data.mangas[0].author,
-          release_date: data.mangas[0].release_date,
-          description: data.mangas[0].description,
-          thumbnail: data.mangas[0].thumbnail,
-          genreId: data.mangas[0].genreId,
-          userId: data.mangas[0].userId,
-        }
-      });
-    });
 
     it('should return 200 and return the manga by id', async () => {
-      const mangaById = data.mangas[0].id;
-      const response = await request.get(`/api/mangas/${mangaById}`);
+      const response = await request.get(`/api/mangas/513d1109-975d-4f7c-9cab-f68a790f5279`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
         id:data.mangas[0].id,
@@ -143,49 +61,9 @@ describe('mangas', () => {
         }
       });
     });
-
-    afterAll(async () => {
-      execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
-    });
   });
 
   describe('DELETE /api/mangas/:id', () => {
-
-    beforeAll(async () => {
-      await prisma.user.create({
-        data: {
-          id: data.user[0].id,
-          name: data.user[0].name,
-          authid: data.user[0].authid,
-          
-        }
-      });
-      await prisma.genre.create({
-        data: {
-          id: data.genre[0].id,
-          name: data.genre[0].name
-        }
-      });
-      await prisma.manga.create({
-        data: {
-          id: data.mangas[0].id,
-          name: data.mangas[0].name,
-          chapters: data.mangas[0].chapters,
-          isFinished: data.mangas[0].isFinished,
-          author: data.mangas[0].author,
-          release_date: data.mangas[0].release_date,
-          description: data.mangas[0].description,
-          thumbnail: data.mangas[0].thumbnail,
-          genreId: data.genre[0].id,
-          userId: data.user[0].id
-        }
-      });
-    });
-
-    afterAll(async () => {
-      execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
-    });
-
     test('it should 204 and return nothing', async () => {
       const response = await request.delete(`${url}/513d1109-975d-4f7c-9cab-f68a790f5279`);
       expect(response.status).toBe(204);
@@ -194,18 +72,17 @@ describe('mangas', () => {
   });
 
   describe('PUT /api/mangas/:id', () => {
-
-    beforeAll(async () => {
+    test('it should 200 and return the updated transaction', async () => {
       await prisma.user.create({
         data: {
-          id: data.user[0].id,
-          name: data.user[0].name,
+          id: "data.user[0].id",
           authid: data.user[0].authid,
+          name: data.user[0].name,
         }
       });
       await prisma.genre.create({
         data: {
-          id: data.genre[0].id,
+          id: "data.genre[0].id",
           name: data.genre[0].name
         }
       });
@@ -219,66 +96,42 @@ describe('mangas', () => {
           release_date: data.mangas[0].release_date,
           description: data.mangas[0].description,
           thumbnail: data.mangas[0].thumbnail,
-          genreId: data.genre[0].id,
-          userId: data.user[0].id
+          genreId: "data.genre[0].id",
+          userId: "data.user[0].id"
         }
       });
-    });
-
-    afterAll(async () => {
-      execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
-    });
-
-    test('it should 200 and return the updated transaction', async () => {
       const response = await request.put(`${url}/513d1109-975d-4f7c-9cab-f68a790f5279`)
         .send({
           name: "Chainsaw Man",
-          chapters: 79,
-          isFinished: false,
+          chapters: 70,
+          isFinished: true,
           author: "Tatsuki Fujimoto",
-          release_date: "2013-04-17T00:00:00.000Z",
+          release_date: "2017-05-16",
           description: "test",
-          genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10"
+          genreId: "b269cf94-f9f6-40f8-bf5d-f9621e5db576"
         }).set('Authorization', authHeader);
 
       expect(response.status).toBe(201);
       expect(response.body.id).toBeTruthy();
-      expect(response.body.chapters).toBe(79);
-      expect(response.body.release_date).toBe("2013-04-17T00:00:00.000Z");
+      expect(response.body.chapters).toBe(70);
+      expect(response.body.release_date).toBe("2017-05-16T00:00:00.000Z");
       expect(response.body.author).toBe("Tatsuki Fujimoto");
       expect(response.body).toEqual({
         id: "513d1109-975d-4f7c-9cab-f68a790f5279",
         name: "Chainsaw Man",
-        chapters: 79,
-        isFinished: false,
+        chapters: 70,
+        isFinished: true,
         author: "Tatsuki Fujimoto",
-        release_date: "2013-04-17T00:00:00.000Z",
+        release_date: "2017-05-16T00:00:00.000Z",
         description: "test",
         thumbnail: "abcdef",
-        genreId: "06e59cc3-c249-4c0c-a628-261496fc2c10",
-        userId: "1"
+        genreId: "b269cf94-f9f6-40f8-bf5d-f9621e5db576",
+        userId: "data.user[0].id"
       });
     });
   });
 
   describe('POST /api/mangas', () => {
-    beforeAll(async () => {
-      await prisma.user.create({
-        data: {
-          authid: data.user[0].authid,
-          name: data.user[0].name,
-          
-        }
-      });
-      await prisma.genre.create({
-        data: {
-          name: data.genre[0].name
-        }
-      });
-    });
-    afterAll(async () => {
-      execSync('prisma migrate reset --force --schema=./src/prisma/schema.prisma');
-    });
     it('should return 201 and the newly created transaction', async () => {
       const response = await request.post(url).send({
         name: "Chainsaw Man",
