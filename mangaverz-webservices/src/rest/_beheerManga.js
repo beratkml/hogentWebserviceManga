@@ -19,6 +19,11 @@ const {
 const getAllMangas = async (ctx) => {
   ctx.body = await prismaMangaService.getAllMangaPrisma();
 }
+getAllMangas.validationScheme={
+  params:Joi.object({
+    id:Joi.string().optional()
+  })
+}
 
 const createManga = async (ctx) => {
   let userId = 0;
@@ -67,6 +72,12 @@ const deleteMangaById = async (ctx) => {
   ctx.status = 204;
 }
 
+deleteMangaById.validationScheme = {
+  params: Joi.object({
+    id: Joi.string()
+  }),
+}
+
 const updateMangaById = async (ctx) => {
   let userId = 0;
   try {
@@ -108,11 +119,11 @@ module.exports = (app) => {
 
   // hasPermission(permissions.loggedIn)
   //CRUD routers
-  router.get('/', getAllMangas);
+  router.get('/', validate(getAllMangas.validationScheme),getAllMangas);
   router.get('/:id', validate(getMangaById.validationScheme), getMangaById);
   router.post('/', hasPermission(permissions.write), validate(createManga.validationScheme), createManga);
   router.put('/:id', hasPermission(permissions.write), validate(updateMangaById.validationScheme), updateMangaById);
-  router.delete('/:id', deleteMangaById);
+  router.delete('/:id', validate(deleteMangaById.validationScheme),deleteMangaById);
   app.use(router.routes()).use(router.allowedMethods());
 }
 // 
