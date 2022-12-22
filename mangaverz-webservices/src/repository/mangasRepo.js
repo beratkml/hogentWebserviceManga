@@ -101,19 +101,19 @@ const deleteMangaById = async (id) => {
 }
 
 //Testen
-const main = async () => {
-  console.log(await prisma.manga.findMany());
-}
+// const main = async () => {
+//   console.log(await prisma.manga.findMany());
+// }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+// main()
+//   .then(async () => {
+//     await prisma.$disconnect()
+//   })
+//   .catch(async (e) => {
+//     console.error(e)
+//     await prisma.$disconnect()
+//     process.exit(1)
+//   })
 
 module.exports = {
   mangaById,

@@ -100,7 +100,7 @@ const withServer = (setter) => {
 
   afterAll(async () => {
     // Cleanup resources!
-    await server.stop();
+    await prisma.$disconnect();
   });
 };
 

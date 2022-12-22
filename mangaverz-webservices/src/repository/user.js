@@ -5,12 +5,14 @@ const {
 //create - update met autho0
 const addNewUser = async ({
   authid,
-  name
+  name,
+  nickname
 }) => {
   const user = await prisma.user.create({
     data: {
       authid: authid,
-      name: name
+      name: name,
+      nickname:nickname
     }
   })
   return user;
@@ -33,9 +35,18 @@ const findByAuth0Id = async (auth0id) => {
   })
 }
 
+const findByNickname = async (nickname) => {
+  return await prisma.user.findFirst({
+    where: {
+      nickname:nickname
+    }
+  })
+}
+
 
 module.exports = {
   addNewUser,
   getAllUsers,
-  findByAuth0Id
+  findByAuth0Id,
+  findByNickname
 }

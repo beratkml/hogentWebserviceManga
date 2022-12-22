@@ -38,44 +38,12 @@ describe('mangas', () => {
       const response = await request.get(url).set('Authorization', authHeader);
       expect(response.status).toBe(200);
       expect(response.body.items.length).toBe(2);
-    })
-  });
-
-  describe('GET /api/mangas/:id', () => {
-
-    it('should return 200 and return the manga by id', async () => {
-      const response = await request.get(`/api/mangas/513d1109-975d-4f7c-9cab-f68a790f5279`);
+    });
+    it('should return 200 and return length 1', async () => {
+      await prisma.manga.deleteMany({});
+      const response = await request.get(url).set('Authorization', authHeader);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual({
-        id:data.mangas[0].id,
-        name: data.mangas[0].name,
-        description: data.mangas[0].description,
-        author: data.mangas[0].author,
-        release_date:data.mangas[0].release_date,
-        chapters: data.mangas[0].chapters,
-        isFinished: data.mangas[0].isFinished,
-        thumbnail: data.mangas[0].thumbnail,
-        genre: {
-          id: data.genre[0].id,
-          name: data.genre[0].name
-        }
-      });
-    });
-    it('should return 404', async () => {
-      const response = await request.get(`/api/mangas/513d1109-975d-4`);
-      expect(response.status).toBe(404);
-    });
-  });
-
-  describe('DELETE /api/mangas/:id', () => {
-    it('it should 204 and return nothing', async () => {
-      const response = await request.delete(`${url}/513d1109-975d-4f7c-9cab-f68a790f5279`);
-      expect(response.status).toBe(204);
-      expect(response.body).toEqual({});
-    });
-    it('it should 500 and return error', async () => {
-      const response = await request.delete(`${url}/513d1`);
-      expect(response.status).toBe(500);
+      expect(response.body.items.length).toBe(0);
     });
   });
 
@@ -205,4 +173,42 @@ describe('mangas', () => {
       expect(response.status).toBe(400);
     });
   });
+  describe('GET /api/mangas/:id', () => {
+
+    it('should return 200 and return the manga by id', async () => {
+      const response = await request.get(`/api/mangas/513d1109-975d-4f7c-9cab-f68a790f5279`);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        id:data.mangas[0].id,
+        name: "Chainsaw Man",
+        description: "test",
+        author: "Tatsuki Fujimoto",
+        release_date:"2017-05-16T00:00:00.000Z",
+        chapters: 70,
+        isFinished: data.mangas[0].isFinished,
+        thumbnail: data.mangas[0].thumbnail,
+        genre: {
+          id: "b269cf94-f9f6-40f8-bf5d-f9621e5db576",
+          name: "shonen"
+        }
+      });
+    });
+    it('should return 404', async () => {
+      const response = await request.get(`/api/mangas/513d1109-975d-4`);
+      expect(response.status).toBe(404);
+    });
+  });
+
+  describe('DELETE /api/mangas/:id', () => {
+    it('it should 204 and return nothing', async () => {
+      const response = await request.delete(`${url}/513d1109-975d-4f7c-9cab-f68a790f5279`);
+      expect(response.status).toBe(204);
+      expect(response.body).toEqual({});
+    });
+    it('it should 500 and return error', async () => {
+      const response = await request.delete(`${url}/513d1`);
+      expect(response.status).toBe(500);
+    });
+  });
+
 });

@@ -34,7 +34,8 @@ const createManga = async (ctx) => {
     await addUserInfo(ctx);
     const user = await prismaUserSerice.register({
       authid: ctx.state.user.sub,
-      name: ctx.state.user.name
+      name: ctx.state.user.name,
+      nickname:ctx.state.user.nickname
     });
     userId = user.id;
   }
@@ -64,7 +65,7 @@ const getMangaById = async (ctx) => {
 }
 getMangaById.validationScheme = {
   params: Joi.object({
-    id: Joi.string()
+    id: Joi.string().optional()
   }),
 }
 const deleteMangaById = async (ctx) => {
@@ -87,7 +88,8 @@ const updateMangaById = async (ctx) => {
     await addUserInfo(ctx);
     const user = await prismaUserSerice.register({
       authid: ctx.state.user.sub,
-      name: ctx.state.user.name
+      name: ctx.state.user.name,
+      nickname:ctx.state.user.nickname
     });
     userId = user.id;
   }

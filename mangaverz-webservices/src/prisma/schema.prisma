@@ -58,6 +58,7 @@ model user {
   id              String            @id @unique @default(uuid())
   authid          String
   name            String
+  nickname        String            @unique
   mangacollection mangacollection[]
   manga           manga[]
 }

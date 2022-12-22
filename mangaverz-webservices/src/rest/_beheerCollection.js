@@ -28,6 +28,8 @@ const addItemToCollection = async (ctx) => {
     await addUserInfo(ctx);
     const user = await prismaUserSerice.register({
       authid: ctx.state.user.sub,
+      name: ctx.state.user.name,
+      nickname:ctx.state.user.nickname
     });
     userId = user.id;
   }
@@ -57,6 +59,7 @@ const getCollectionById = async (ctx) => {
   // ctx.body = await mangaCollectionService.getById(ctx.params.id);
   ctx.body = await prismaCollectionService.getCollectionById(ctx.params.id);
 }
+
 
 const deleteCollectionById = async (ctx) => {
   await prismaCollectionService.deleteColletionById(ctx.params.id);

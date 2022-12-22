@@ -6,11 +6,13 @@ const {
 
 const register = async ({
   authid,
-  name
+  name,
+  nickname
 }) => {
   return await prismaUserRepo.addNewUser({
     authid,
-    name
+    name,
+    nickname
   });
 }
 
@@ -21,6 +23,18 @@ const getByAuth0ID = async (authid) => {
   if (!user) {
     throw ServiceError.notFound(`No user with id ${authid} exists`, {
       authid,
+    });
+  }
+  return user;
+}
+
+const getByNickname = async (nickname) => {
+  const logger = getLogger();
+  logger.info(`Fetching user with auth0id ${nickname}`);
+  const user = await prismaUserRepo.findByNickname(nickname);
+  if (!user) {
+    throw ServiceError.notFound(`No user with nickname: ${nickname} exists`, {
+      nickname,
     });
   }
   return user;
@@ -37,5 +51,6 @@ const getAllUsers = async () => {
 module.exports = {
   register,
   getAllUsers,
-  getByAuth0ID
+  getByAuth0ID,
+  getByNickname
 }

@@ -44,7 +44,8 @@
     "testPathIgnorePatterns": [
       "src",
       "node_modules",
-      "config"
+      "config",
+      "../mangaverz-webservices/__tests__/helpers.js"
     ]
   }
 }

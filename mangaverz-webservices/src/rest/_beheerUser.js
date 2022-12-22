@@ -16,9 +16,10 @@ const getAllUsers = async (ctx) => {
   ctx.body = await prismaUserService.getAllUsers();
 }
 
-const getByAuth0ID = async (ctx) => {
-  ctx.body = await prismaUserService.getByAuth0ID(ctx.state.user.sub);
+const getUserByNickname = async(ctx)=>{
+  ctx.body = await prismaUserService.getByNickname(ctx.params.nickname);
 }
+
 
 module.exports = (app) => {
   const router = new Router({
@@ -26,7 +27,7 @@ module.exports = (app) => {
   });
   //CRUD routers
   router.get('/', getAllUsers);
-  router.get('/:id', getByAuth0ID)
+  router.get('/:nickname', getUserByNickname)
   router.post('/', createUser);
   app.use(router.routes()).use(router.allowedMethods());
 }

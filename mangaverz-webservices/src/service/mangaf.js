@@ -49,7 +49,6 @@ const updateMangaByIdPrisma = async ({
   genreId
 }) => {
   const data = await prismaMangaRepo.updateMangaById(id, name, chapters, isFinished, author, release_date, description, genreId);
-  console.log(data);
   return data;
 }
 

@@ -1,7 +1,23 @@
 const prismaCollectionRepo = require('../repository/collectionRepo');
 
 const getCollectionById = async (id) => {
-  return await prismaCollectionRepo.getCollectionById(id);
+  const collection =  await prismaCollectionRepo.getCollectionByUser(id);
+  return {
+    items: collection,
+    count: collection.length
+  }
+}
+
+const getCollectionFiltered = async (nickname) => {
+  const collection =  await prismaCollectionRepo.getCollectionFiltered(nickname);
+  return {
+    items: collection,
+    count: collection.length
+  }
+}
+
+const filterCollectionByAUTH0ID = async(id,authid)=>{
+  return await prismaCollectionRepo.filterCollectionByAUTH0ID(id,authid);
 }
 
 const getAllCollections = async () => {
@@ -50,5 +66,6 @@ module.exports = {
   updateCollectionById,
   deleteColletionById,
   getAllCollections,
-  addMangaToCollection
+  addMangaToCollection,
+  getCollectionFiltered
 }

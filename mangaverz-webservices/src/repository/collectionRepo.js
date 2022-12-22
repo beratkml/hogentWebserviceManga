@@ -2,10 +2,50 @@ const {
   prisma
 } = require('../prisma/prisma');
 
-const getCollectionById = async (id) => {
-  return await prisma.mangacollection.findFirst({
+const getCollectionByUser = async (id) => {
+  return await prisma.mangacollection.findMany({
     where: {
-      id: id
+      user:{
+        id:id
+      }
+    },
+    select: {
+      manga: {
+        select: {
+          id: true,
+          name: true,
+          chapters: true,
+          isFinished: true,
+          author: true,
+          release_date: true,
+          description: true,
+          thumbnail: true,
+          genre: true
+        }
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          authid: true,
+        }
+      },
+      statusreading: {
+        select: {
+          id: true,
+          type: true
+        }
+      }
+    }
+  })
+}
+
+const getCollectionFiltered = async (nickname) => {
+  return await prisma.mangacollection.findMany({
+    where: {
+      user:{
+        nickname:nickname
+      }
     },
     select: {
       manga: {
@@ -127,6 +167,56 @@ const deleteColletionById = async (id) => {
   })
 }
 
+const filterCollectionByAUTH0ID = async(id,authid)=>{
+  const data = await prisma.mangacollection.findMany({
+    where:{
+      id:id,
+      user:{
+        authid:authid
+      }
+    },
+    select:{
+      current_chapter:true,
+      end_date:true,
+      id:true,
+      start_date:true,
+      statusreading:{
+        select:{
+          id:true,
+          type:true
+        }
+      },
+      user:{
+        select:{
+          id:true,
+          authid:true,
+          name:true,
+        }
+      },
+      manga:{
+        select:{
+          author:true,
+          chapters:true,
+          description:true,
+          name:true,
+          isFinished:true,
+          release_date:true,
+          thumbnail:true,
+          id:true,
+          genre:{
+            select:{
+              id:true,
+              manga:true,
+              name:true,
+            }
+          },
+        }
+      }
+    }
+  })
+  return data;
+}
+
 const addMangaToCollection = async (
   mangaId,
   start_date,
@@ -147,11 +237,11 @@ const addMangaToCollection = async (
   });
 }
 
-
 module.exports = {
   getAllCollections,
-  getCollectionById,
+  getCollectionByUser,
   updateCollectionById,
   deleteColletionById,
   addMangaToCollection,
+  getCollectionFiltered
 }

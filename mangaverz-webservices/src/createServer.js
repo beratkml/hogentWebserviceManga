@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const koaCors = require('@koa/cors');
+const {prisma} = require('../src/prisma/prisma');
 const {
   getLogger,
   initializeLogger
@@ -155,7 +156,7 @@ module.exports = async function createServer() {
 
     async stop() {
       app.removeAllListeners();
-      // await shutdownData();
+      await prisma.$disconnect();
       getLogger().info('Goodbye');
     },
   }
