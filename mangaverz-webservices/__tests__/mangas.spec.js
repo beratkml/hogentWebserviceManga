@@ -54,6 +54,7 @@ describe('mangas', () => {
           id: "data.user[0].id",
           authid: data.user[0].authid,
           name: data.user[0].name,
+          nickname:"pop"
         }
       });
       await prisma.genre.create({
@@ -111,6 +112,7 @@ describe('mangas', () => {
           id: "qsdfqfq.user[0].id",
           authid: data.user[0].authid,
           name: data.user[0].name,
+          nickname:"poppie"
         }
       });
       await prisma.genre.create({

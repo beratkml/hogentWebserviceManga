@@ -67,11 +67,38 @@ const deleteCollectionById = async (ctx) => {
 }
 
 const updateCollectionById = async (ctx) => {
-  ctx.body = await prismaCollectionService.updateCollectionById(ctx.params.id, {
+  let userId = 0;
+  try {
+    const user = await prismaUserSerice.getByAuth0ID(ctx.state.user.sub);
+    userId = user.id;
+  } catch (err) {
+    await addUserInfo(ctx);
+    const user = await prismaUserSerice.register({
+      authid: ctx.state.user.sub,
+      name: ctx.state.user.name,
+      nickname:ctx.state.user.nickname
+    });
+    userId = user.id;
+  }
+  const newManga = await prismaCollectionService.updateCollectionById({
     ...ctx.request.body,
     start_date: new Date(ctx.request.body.start_date),
-    end_date: new Date(ctx.request.body.end_date)
+    end_date: new Date(ctx.request.body.end_date),
+    user_id: userId
   });
+  ctx.body = newManga
+  ctx.status = 201;
+}
+updateCollectionById.validationScheme = {
+  body: {
+    name: Joi.string().optional(),
+    chapters: Joi.number().integer().optional(),
+    isFinished: Joi.boolean().optional(),
+    author: Joi.string().optional(),
+    release_date: Joi.date().less('now').optional(),
+    description: Joi.string().optional(),
+    genreId: Joi.string().optional()
+  }
 }
 
 module.exports = (app) => {

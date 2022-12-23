@@ -33,7 +33,8 @@ const data = {
   user: [{
     id: "1",
     name: config.get('auth.testUser.userId'),
-    authid: config.get('auth.testUser.username')
+    authid: config.get('auth.testUser.username'),
+    nickname:"wawa"
   }]
 }
 
@@ -68,6 +69,7 @@ const withServer = (setter) => {
         id: data.user[0].id,
         authid: data.user[0].authid,
         name: data.user[0].name,
+        nickname:data.user[0].nickname
       }
     });
     await prisma.genre.create({
