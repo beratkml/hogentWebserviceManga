@@ -55,6 +55,7 @@
   
 
 ## Screenshots
+## Frontend
 <p>
 <img src="Screenshot_21.png" width="350">
 </p>
@@ -67,6 +68,26 @@
 <p>
 <img src="Screenshot_24.png" width="350">
 </p>
+
+## Backend
+<p>
+<img src="Screenshot_28.png" width="350">
+</p>
+<p>
+<img src="Screenshot_29.png" width="350">
+</p>
+<p>
+<img src="Screenshot_30.png" width="350">
+</p>
+<p>
+<img src="Screenshot_31.png" width="350">
+</p>
+<p>
+<img src="Screenshot_32.png" width="350">
+</p>
+<p>
+<img src="Screenshot_33.png" width="350">
+</p> 
 
 ## Behaalde minimumvereisten
 
@@ -197,9 +218,9 @@ Enkel het normaal en alternatief verloop van de manga endpoint wordt getest.
 
 ### Front-end Web Development
 
-
 isFinished: de boolean waarden verschijnen niet op het adminpaneel <br/>
-Form inputs: alle form inputs zijn rood (?)
+Form inputs: alle form inputs zijn rood (?)<br/>
+admin panelen zijn niet verborgen<br/>
 
 ### Web Services
 
