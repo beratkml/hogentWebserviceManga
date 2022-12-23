@@ -46,6 +46,7 @@
       "node_modules",
       "config",
       "../mangaverz-webservices/__tests__/helpers.js"
+      
     ]
   }
 }

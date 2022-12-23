@@ -1,33 +1,74 @@
-# Voornaam Familienaam (Studentennummer)
-
-> Duid aan welke vakken je volgt en vermeld voor deze vakken de link naar jouw GitHub repository. In het geval je slechts één vak volgt, verwijder alle inhoud omtrent het andere vak.
-> Verwijder alle instructies (lijnen die starten met >)
+# Berat Kamali (202181265)
 
 - [x] Front-end Web Development
   - [GitHub repository](https://github.com/Web-IV/2223-frontendweb-berathog)
   - [Online versie](https://frontendweb-mangaverz.onrender.com)
-- [x] Web Services: GITHUB URL
+- [x] Web Services:
   - [GitHub repository](https://github.com/Web-IV/2223-webservices-berathog)
   - [Online versie](https://webservices-mangaverz.onrender.com)
 
 **Logingegevens**
 
-- Gebruikersnaam/e-mailadres:
-- Wachtwoord:
+- Gebruikersnaam/e-mailadres: testuser@gmail.com
+- Wachtwoord: Rootroot123
 
-> Vul eventueel aan met extra accounts voor administrators of andere rollen.
+- Gebruikersnaam/e-mailadres: test123@gmail.com
+- Wachtwoord: Rootroot123
 
 ## Projectbeschrijving
 
-> Omschrijf hier duidelijk waarover jouw project gaat. Voeg een domeinmodel (of EERD) toe om jouw entiteiten te verduidelijken.
+<p>
+<img src="Screenshot_20.png" width="350">
+</p>
+
+- **Genre**
+  - id: unieke id van het genre
+  - name: naam van het genre
+- **User**
+  - id: unieke id van een user
+  - authid: id dat afkomstig is van auth0
+  - name: email van een user
+  - nickname: het gebruikersnaam is in dit geval uniek, omdat we op die manier de huidige user kunnen gebruiken binnen onze front-end
+- **Manga**
+  - id: unieke id van manga --> String
+  - name: titel van een manga --> String
+  - chapters: aantal hoofdstukken van een manga --> int
+  - isFinished: toont aan of de reeks van een manga beëindigd  is --> Boolean
+  - author: naam van de auteur --> String
+  - release_date: datum wanneer de manga is uitgebracht (als we een manga toevoegen moet dit een datum zijn voor de huidige datum) -->Datetime
+  - description: beschrijving van een manga --> String
+  - genreID: id van een genre (inner join) --> id afkomstig van Genre tabel
+  - userID: id van een user (inner join). Dit dient enkel wanneer een admin user iets toevoegd aan de globale collectie --> id afkomstig van User tabel
+  - thumbnail: referentie naar Cloudinary om foto's op te halen --> String
+- **Mangacollection**
+  - id: unieke id van collection --> String
+  - start_date: datum wanneer men is gestart met het lezen van een manga --> DateTime
+  - end_date: datum wanneer men is gestopt met het lezen van een manga --> DateTime
+  - current_chapter: het huidige hoofdstuk --> Int
+  - mangaid: id van de manga dat zich bevindt binnen de collection
+  - userid: id van de user die de manga heeft toegevoegd aan de collection
+  - statusReadingId: status van het lezen (reading,paused,...)
+- **Statusreading**
+  - id: unieke id van de status -->String
+  - type: naam van de status -->String
+
+  
 
 ## Screenshots
-
-> Voeg enkele (nuttige!) screenshots toe die tonen wat de app doet.
+<p>
+<img src="Screenshot_21.png" width="350">
+</p>
+<p>
+<img src="Screenshot_22.png" width="350">
+</p>
+<p>
+<img src="Screenshot_23.png" width="350">
+</p>
+<p>
+<img src="Screenshot_24.png" width="350">
+</p>
 
 ## Behaalde minimumvereisten
-
-> Duid per vak aan welke minimumvereisten je denkt behaald te hebben
 
 ### Front-end Web Development
 
@@ -49,7 +90,7 @@
   - [x] meerdere API calls (naast login/register)
   - [x] degelijke foutmeldingen indien API call faalt
   - [x] gebruikt useState enkel voor lokale state
-  - [ ] gebruikt Context, useReducer, Redux… voor globale state
+  - [x] gebruikt Context, useReducer, Redux… voor globale state
 <br />
 
 - **hooks**
@@ -59,10 +100,10 @@
 <br />
 
 - **varia**
-  - [ ] een aantal niet-triviale testen (unit en/of e2e en/of ui)
+  - [x] een aantal niet-triviale testen (unit en/of e2e en/of ui)
   - [x] minstens één extra technologie
-  - [ ] duidelijke en volledige README.md
-  - [] volledig en tijdig ingediend dossier
+  - [x] duidelijke en volledige README.md
+  - [x] volledig en tijdig ingediend dossier
 
 
 ### Web Services
@@ -70,7 +111,7 @@
 - **datalaag**
 
   - [x] voldoende complex (meer dan één tabel)
-  - [ ] één module beheert de connectie + connectie wordt gesloten bij sluiten server
+  - [x] één module beheert de connectie + connectie wordt gesloten bij sluiten server
   - [x] heeft migraties
   - [x] heeft seeds
 <br />
@@ -93,26 +134,26 @@
   - [x] degelijke foutboodschappen
   - [x] volgt de conventies van een RESTful API
   - [x] bevat geen domeinlogica
-  - [x] degelijke authorisatie/authenticatie op alle routes
+  - [] degelijke authorisatie/authenticatie op alle routes
 <br />
 
 - **varia**
   - [x] een aantal niet-triviale testen (min. 1 controller >=80% coverage)
   - [x] minstens één extra technologie
-  - [ ] duidelijke en volledige `README.md`
+  - [x] duidelijke en volledige `README.md`
   - [x] maakt gebruik van de laatste ES6-features (object destructuring, spread operator...)
-  - [ ] volledig en tijdig ingediend dossier
+  - [x] volledig en tijdig ingediend dossier
 
 
 ## Projectstructuur
 
 ### Front-end Web Development
 
-> Hoe heb je jouw applicatie gestructureerd (mappen, design patterns, hiërarchie van componenten, state...)?
+Het project bevat een map voor alle componenten. Dit is dan nogmaals onderverdeeld per categorie. We hebben ook een 'pages' folder. Hierin staan alle main 'pages' van de website. Deze componenten bevatten dan alle componenten van die pagina. De map 'topbard-crud' bevat de knoppen van het adminpaneel.
 
 ### Web Services
 
-> Hoe heb je jouw applicatie gestructureerd (mappen, design patterns...)?
+De mappen zijn onderverdeeld in verschillende lagen namelijk de repository laag (alle data afkomstig van de databank), services laag (toont foutboodschappen,...) en de rest laag (alle endpoints staan hier vermeld).
 
 ## Extra technologie
 
@@ -122,32 +163,44 @@ Als extra technologie heb ik ChakraUI gebruikt. Chakra UI is een eenvoudige, mod
 * [ChakraUI NPM](https://www.npmjs.com/package/@chakra-ui/react)
 
 ### Web Services
-Als extra technologie heb ik Prisma gebruikt. Prisma is een open-source ORM voor Node.js en TypeScript. Het wordt gebruikt als een alternatief voor het schrijven van gewone SQL, of het gebruik van een andere database access tool zoals SQL query builders (zoals knex.js) of ORM's (zoals TypeORM en Sequelize).<br>
+Als extra technologie heb ik Prisma en Cloudinary gebruikt. Prisma is een open-source ORM voor Node.js en TypeScript. Het wordt gebruikt als een alternatief voor het schrijven van gewone SQL, of het gebruik van een andere database access tool zoals SQL query builders (zoals knex.js) of ORM's (zoals TypeORM en Sequelize). Cloudinary is een cloud omgeving om foto's op te slaan. Het is geen goed idee dat we een volledige image opslaan in een databank, daarom dat we enkel de referentie opslaan.<br>
 * [Prisma](https://www.prisma.io/)<br>
 * [Prisma NPM](https://www.npmjs.com/package/prisma)
+* [Cloudinary Website](https://cloudinary.com/)<br>
+* [Cloudinary NPM](https://www.npmjs.com/package/cloudinary-react)
 
 ## Testresultaten
 
 ### Front-end Web Development
 
-> Schrijf hier een korte oplijsting en beschrijving van de geschreven testen
+Enkel de forms worden getest --> PUT en POST
+<p>
+<img src="Screenshot_26.png" width="350">
+</p>
+<p>
+<img src="Screenshot_27.png" width="350">
+</p>
 
 ### Web Services
 
-> Schrijf hier een korte oplijsting en beschrijving van de geschreven testen + voeg een screenshot van de coverage en uitvoering toe
-
+Enkel het normaal en alternatief verloop van de manga endpoint wordt getest.
 <p>
 <img src="Screenshot_19.png" width="350">
 </p>
+<p>
+<img src="Screenshot_25.png" width="350">
+</p>
+
 
 
 ## Gekende bugs
 
 ### Front-end Web Development
 
-> Zijn er gekende bugs?
+
+isFinished: de boolean waarden verschijnen niet op het adminpaneel <br/>
+Form inputs: alle form inputs zijn rood (?)
 
 ### Web Services
 
-> Zijn er gekende bugs?
 
