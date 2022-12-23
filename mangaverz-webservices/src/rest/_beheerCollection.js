@@ -55,11 +55,15 @@ addItemToCollection.validationScheme = {
   }
 }
 
-const getCollectionById = async (ctx) => {
+const getCollectionByNickname = async (ctx) => {
   // ctx.body = await mangaCollectionService.getById(ctx.params.id);
-  ctx.body = await prismaCollectionService.getCollectionById(ctx.params.id);
+  ctx.body = await prismaCollectionService.getCollectionByNickname(ctx.params.id);
 }
 
+const getCollectionById = async (ctx) => {
+  // ctx.body = await mangaCollectionService.getById(ctx.params.id);
+  ctx.body = await prismaCollectionService.getCollectionById(ctx.params.id,ctx.params.id1);
+}
 
 const deleteCollectionById = async (ctx) => {
   await prismaCollectionService.deleteColletionById(ctx.params.id);
@@ -82,6 +86,8 @@ const updateCollectionById = async (ctx) => {
   }
   const newManga = await prismaCollectionService.updateCollectionById({
     ...ctx.request.body,
+    id: ctx.params.id,
+    current_chapter:parseInt(ctx.request.body.current_chapter),
     start_date: new Date(ctx.request.body.start_date),
     end_date: new Date(ctx.request.body.end_date),
     user_id: userId
@@ -108,7 +114,8 @@ module.exports = (app) => {
 
   //CRUD routers
   router.get('/', loadAllCollections);
-  router.get('/:id', getCollectionById);
+  router.get('/:id', getCollectionByNickname);
+  router.get('/:id/:id1', getCollectionById);
   router.post('/', addItemToCollection);
   router.put('/:id', updateCollectionById);
   router.delete('/:id', deleteCollectionById);

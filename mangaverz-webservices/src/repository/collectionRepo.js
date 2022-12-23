@@ -10,6 +10,59 @@ const getCollectionByUser = async (id) => {
       }
     },
     select: {
+      id:true,
+      current_chapter:true,
+      start_date:true,
+      end_date:true,
+      manga: {
+        select: {
+          id: true,
+          name: true,
+          chapters: true,
+          isFinished: true,
+          author: true,
+          release_date: true,
+          description: true,
+          thumbnail: true,
+          genre: true
+        }
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          authid: true,
+        }
+      },
+      statusreading: {
+        select: {
+          id: true,
+          type: true
+        }
+      }
+    }
+  })
+}
+
+const getCollectionById = async (id,id1) => {
+  return await prisma.mangacollection.findFirst({
+    where: {
+      AND: [
+        {
+            id: {
+                equals: id
+            }
+        },
+        {
+            userId:id1
+        },
+    ],
+    },
+    select: {
+      id:true,
+      current_chapter:true,
+      start_date:true,
+      end_date:true,
       manga: {
         select: {
           id: true,
@@ -123,38 +176,12 @@ const updateCollectionById = async (id, start_date,
     where: {
       id: id
     },
-    select: {
-      manga: {
-        select: {
-          name: true,
-          description: true,
-          author: true,
-          chapters: true,
-          isFinished: true,
-          thumbnail: true,
-          genre: true
-        }
-      },
-      user: {
-        select: {
-          id: true,
-          name: true,
-          authid: true
-        }
-      },
-      statusreading: {
-        select: {
-          id: true,
-          type: true
-        }
-      }
-    },
     data: {
       start_date: start_date,
       end_date: end_date,
       current_chapter: current_chapter,
       statusReadingId: status_reading
-    }
+    },
   })
   return data;
 }
@@ -243,5 +270,5 @@ module.exports = {
   updateCollectionById,
   deleteColletionById,
   addMangaToCollection,
-  getCollectionFiltered
-}
+  getCollectionFiltered,
+  getCollectionById}
